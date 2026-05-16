@@ -39,7 +39,7 @@
                     <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Spent At
                     </th>
-                    <th scope="col" colspan="2" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th scope="col" colspan="3" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Action
                     </th>
                   </tr>
@@ -66,7 +66,10 @@
                       {{ $expense->spent_at->format('m/d/Y g:i A') }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      <a href="{{ route('expense.edit', ['expense' => $expense->id]) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                      <a href="{{ route('expense.show', ['expense' => $expense->id, 'page' => $expenses->currentPage()]) }}" class="text-indigo-600 hover:text-indigo-900">View</a>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                      <a href="{{ route('expense.edit', ['expense' => $expense->id, 'page' => $expenses->currentPage()]) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                       <form action="{{ route('expense.destroy', ['expense' => $expense->id]) }}" method="post">

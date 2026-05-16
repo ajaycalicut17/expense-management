@@ -40,19 +40,34 @@ class ExpenseController extends Controller
         return to_route('expense.index')->with('status', 'Expense added successfully');
     }
 
-    public function show(Expense $expense): View
-    {
-        return view('auth.expense.show');
+    public function show(
+        Expense $expense,
+        CategoryService $categoryService
+    ): View {
+        $categories = $categoryService->all();
+
+        return view('auth.expense.show', compact('expense', 'categories'));
     }
 
-    public function edit(Expense $expense): View
-    {
-        return view('auth.expense.edit');
+    public function edit(
+        Expense $expense,
+        CategoryService $categoryService
+    ): View {
+        $categories = $categoryService->all();
+
+        return view('auth.expense.edit', compact('expense', 'categories'));
     }
 
-    public function update(UpdateExpenseRequest $request, Expense $expense)
-    {
-        //
+    public function update(
+        UpdateExpenseRequest $request,
+        Expense $expense,
+        ExpenseService $expenseService
+    ): RedirectResponse {
+        $data = ExpenseData::createFromRequest($request);
+
+        $expenseService->update($expense, $data);
+
+        return to_route('expense.index', ['page' => $request->input('page')])->with('status', 'Expense updated successfully');
     }
 
     public function destroy(Expense $expense)

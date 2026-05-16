@@ -38,4 +38,15 @@ class ExpenseService
 
         return $expense;
     }
+
+    public function update(Expense $expense, ExpenseData $data): Expense
+    {
+        $expense->category_id = $data->categoryId;
+        $expense->amount = $data->amount;
+        $expense->description = $data->description;
+        $expense->spent_at = $data->spentAt;
+        $expense->save();
+
+        return $expense;
+    }
 }

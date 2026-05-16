@@ -12,7 +12,7 @@ class UpdateExpenseRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,7 +23,17 @@ class UpdateExpenseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'category_id' => 'required|exists:categories,id',
+            'amount' => 'required|numeric|decimal:0,2',
+            'description' => 'required|string',
+            'spent_at' => 'required|date',
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'category_id' => 'category',
         ];
     }
 }

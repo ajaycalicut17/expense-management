@@ -22,7 +22,7 @@
                             <option>Select Category</option>
 
                             @foreach($categories as $category)
-                                <option value="{{ $category->id }}" @selected(old('category') == $category->id)>{{ $category->name }}</option>
+                                <option value="{{ $category->id }}" @selected(old('category_id') == $category->id)>{{ $category->name }}</option>
                             @endforeach
                         </select>
                         @error('category_id')
