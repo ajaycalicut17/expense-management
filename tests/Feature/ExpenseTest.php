@@ -181,4 +181,20 @@ class ExpenseTest extends TestCase
             'spent_at' => $now->format('Y-m-d H:i:s'),
         ]);
     }
+
+    public function test_delete_expense()
+    {
+        $user = User::factory()->create();
+        $expense = Expense::factory()->create([
+            'user_id' => $user->id,
+        ]);
+
+        $response = $this->actingAs($user)->delete("/expense/{$expense->id}");
+
+        $response->assertRedirect('/expense');
+        $response->assertSessionHas('status', 'Expense deleted successfully');
+        $this->assertSoftDeleted('expenses', [
+            'id' => $expense->id,
+        ]);
+    }
 }
