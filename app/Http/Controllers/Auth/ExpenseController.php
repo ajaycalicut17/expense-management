@@ -11,6 +11,7 @@ use App\Services\Models\CategoryService;
 use App\Services\Models\ExpenseService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 
 class ExpenseController extends Controller
@@ -25,7 +26,7 @@ class ExpenseController extends Controller
 
     public function create(CategoryService $categoryService): View
     {
-        $categories = $categoryService->all();
+        $categories = Cache::rememberForever('expenses.categories', fn () => $categoryService->all());
 
         return view('auth.expense.create', compact('categories'));
     }
@@ -46,7 +47,7 @@ class ExpenseController extends Controller
         Expense $expense,
         CategoryService $categoryService
     ): View {
-        $categories = $categoryService->all();
+        $categories = Cache::rememberForever('expenses.categories', fn () => $categoryService->all());
 
         return view('auth.expense.show', compact('expense', 'categories'));
     }
@@ -55,7 +56,7 @@ class ExpenseController extends Controller
         Expense $expense,
         CategoryService $categoryService
     ): View {
-        $categories = $categoryService->all();
+        $categories = Cache::rememberForever('expenses.categories', fn () => $categoryService->all());
 
         return view('auth.expense.edit', compact('expense', 'categories'));
     }
