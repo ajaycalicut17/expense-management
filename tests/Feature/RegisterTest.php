@@ -25,7 +25,7 @@ class RegisterTest extends TestCase
             'password_confirmation' => '',
         ]);
 
-        $response->assertSessionHasErrors([
+        $response->assertInvalid([
             'name' => 'The name field is required.',
             'email' => 'The email field is required.',
             'password' => 'The password field is required.',
@@ -37,11 +37,11 @@ class RegisterTest extends TestCase
         $response = $this->post('/register', [
             'name' => 'Test User',
             'email' => 'test@example.com',
-            'password' => 'password123',
-            'password_confirmation' => 'password123',
+            'password' => 'password',
+            'password_confirmation' => 'password',
         ]);
 
-        $response->assertSessionHasNoErrors();
+        $response->assertValid();
         $this->assertDatabaseHas('users', [
             'name' => 'Test User',
             'email' => 'test@example.com',
