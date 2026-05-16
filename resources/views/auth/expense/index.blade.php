@@ -25,9 +25,6 @@
                       Sl.No
                     </th>
                     <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      User
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Category
                     </th>
                     <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -51,9 +48,6 @@
                       {{ $index + $expenses->firstItem() }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {{ $expense->user->name }}
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       {{ $expense->category->name }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -66,7 +60,9 @@
                       {{ $expense->spent_at->format('m/d/Y g:i A') }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      <a href="{{ route('expense.show', ['expense' => $expense->id, 'page' => $expenses->currentPage()]) }}" class="text-indigo-600 hover:text-indigo-900">View</a>
+                      @can('view', $expense)
+                        <a href="{{ route('expense.show', ['expense' => $expense->id, 'page' => $expenses->currentPage()]) }}" class="text-indigo-600 hover:text-indigo-900">View</a>
+                      @endcan
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                       <a href="{{ route('expense.edit', ['expense' => $expense->id, 'page' => $expenses->currentPage()]) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
@@ -80,6 +76,14 @@
                     </td>
                   </tr>
                   @endforeach
+
+                  @if($expenses->isEmpty())
+                    <tr>
+                      <td colspan="6" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+                        No expenses found
+                      </td>
+                    </tr>
+                  @endif
                   
                 </tbody>
               </table>

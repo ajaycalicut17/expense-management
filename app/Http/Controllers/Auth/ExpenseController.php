@@ -10,13 +10,15 @@ use App\Models\Expense;
 use App\Services\Models\CategoryService;
 use App\Services\Models\ExpenseService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class ExpenseController extends Controller
 {
-    public function index(ExpenseService $expenseService): View
+    public function index(ExpenseService $expenseService, ExpenseData $data): View
     {
-        $expenses = $expenseService->paginate();
+        $data->userId = Auth::id();
+        $expenses = $expenseService->paginate($data);
 
         return view('auth.expense.index', compact('expenses'));
     }

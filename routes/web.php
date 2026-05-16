@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\ExpenseController;
 use App\Http\Controllers\Guest\LoginController;
 use App\Http\Controllers\Guest\RegisterController;
+use App\Models\Expense;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -26,5 +27,20 @@ Route::middleware('auth')->group(function () {
 
     Route::view('/dashboard', 'auth.dashboard.index')->name('dashboard.index');
 
-    Route::resource('expense', ExpenseController::class);
+    Route::resource('expense', ExpenseController::class)
+        ->middlewareFor(['index'], [
+            'can:viewAny,'.Expense::class,
+        ])
+        ->middlewareFor(['create', 'store'], [
+            'can:create,'.Expense::class,
+        ])
+        ->middlewareFor(['show'], [
+            'can:view,expense',
+        ])
+        ->middlewareFor(['edit', 'update'], [
+            'can:update,expense',
+        ])
+        ->middlewareFor(['destroy'], [
+            'can:delete,expense',
+        ]);
 });

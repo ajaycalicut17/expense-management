@@ -39,7 +39,6 @@ class ExpenseTest extends TestCase
         $response->assertSeeTextInOrder([
             'Add',
             'Sl.No',
-            'User',
             'Category',
             'Amount',
             'Description',

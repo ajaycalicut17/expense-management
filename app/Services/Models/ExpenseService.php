@@ -8,21 +8,20 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class ExpenseService
 {
-    public function paginate(): LengthAwarePaginator
+    public function paginate(ExpenseData $data): LengthAwarePaginator
     {
         return Expense::query()
             ->select([
                 'id',
-                'user_id',
                 'category_id',
                 'amount',
                 'description',
                 'spent_at',
             ])
             ->with([
-                'user:id,name,email',
                 'category:id,name',
             ])
+            ->where('user_id', $data->userId)
             ->paginate(10);
     }
 
