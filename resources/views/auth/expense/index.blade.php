@@ -1,7 +1,7 @@
 <x-layouts.app>
   <x-slot name="header">
     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-      {{ __('Expenses') }}
+      {{ __('Expense') }}
     </h2>
   </x-slot>
 
@@ -13,7 +13,7 @@
             <a href="{{ route('expense.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
               Add
             </a>
-            <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+            <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg mt-4">
               <table class="w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                   <tr>
@@ -21,13 +21,22 @@
                       Sl.No
                     </th>
                     <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Name
+                      User
                     </th>
-                    <th scope="col" class="relative px-6 py-3">
-                      <span class="sr-only">Edit</span>
+                    <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Category
                     </th>
-                    <th scope="col" class="relative px-6 py-3">
-                      <span class="sr-only">Delete</span>
+                    <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Amount
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Description
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Spent At
+                    </th>
+                    <th scope="col" colspan="2" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Action
                     </th>
                   </tr>
                 </thead>
@@ -38,7 +47,19 @@
                       {{ $index + $expenses->firstItem() }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {{ $expense->name }}
+                      {{ $expense->user->name }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {{ $expense->category->name }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {{ Number::currency($expense->amount) }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {{ $expense->description }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {{ $expense->spent_at->format('d/m/Y g:i A') }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                       <a href="{{ route('expense.edit', ['expense' => $expense->id]) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
