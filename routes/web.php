@@ -12,7 +12,8 @@ Route::controller(LoginController::class)->group(function () {
 });
 
 Route::controller(RegisterController::class)->group(function () {
-    Route::get('/register', 'index')->name('register');
+    Route::get('/register', 'index')->name('register.index');
+    Route::post('/register', 'store')->name('register.store');
 });
 
 Route::view('/dashboard', 'auth.dashboard.index')->name('dashboard.index');
