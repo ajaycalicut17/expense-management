@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Category;
 use App\Models\User;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Tests\TestCase;
@@ -43,6 +44,58 @@ class ExpenseTest extends TestCase
             'Description',
             'Spent At',
             'Action',
+        ]);
+    }
+
+    public function test_create_page_shows_expense_create_form()
+    {
+        $user = User::factory()->create();
+        $response = $this->actingAs($user)->get('/expense/create');
+
+        $response->assertSuccessful();
+        $response->assertViewHasAll([
+            'categories',
+        ]);
+    }
+
+    public function test_store_validation_fails_with_invalid_data()
+    {
+        $user = User::factory()->create();
+        $response = $this->actingAs($user)->post('/expense', [
+            'category_id' => '',
+            'amount' => '',
+            'description' => '',
+            'spent_at' => '',
+        ]);
+
+        $response->assertInvalid([
+            'category_id' => 'The category field is required.',
+            'amount' => 'The amount field is required.',
+            'description' => 'The description field is required.',
+            'spent_at' => 'The spent at field is required.',
+        ]);
+    }
+
+    public function test_store_creates_new_expense()
+    {
+        $user = User::factory()->create();
+        $category = Category::factory()->create();
+        $now = now();
+
+        $response = $this->actingAs($user)->post('/expense', [
+            'category_id' => $category->id,
+            'amount' => 100,
+            'description' => 'Test expense',
+            'spent_at' => $now,
+        ]);
+
+        $response->assertRedirect('/expense');
+        $this->assertDatabaseHas('expenses', [
+            'user_id' => $user->id,
+            'category_id' => $category->id,
+            'amount' => 10000,
+            'description' => 'Test expense',
+            'spent_at' => $now->format('Y-m-d H:i:s'),
         ]);
     }
 }

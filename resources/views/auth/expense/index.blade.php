@@ -8,6 +8,10 @@
   <div class="py-12">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
       <!-- This example requires Tailwind CSS v2.0+ -->
+
+        <!-- Session Status -->
+        <x-auth-session-status class="font-medium text-lg text-green-600 mb-4 text-center bg-green-100 p-2 rounded shadow" :status="session('status')" />
+
         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
             <a href="{{ route('expense.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
@@ -59,7 +63,7 @@
                       {{ $expense->description }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {{ $expense->spent_at->format('d/m/Y g:i A') }}
+                      {{ $expense->spent_at->format('m/d/Y g:i A') }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                       <a href="{{ route('expense.edit', ['expense' => $expense->id]) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
