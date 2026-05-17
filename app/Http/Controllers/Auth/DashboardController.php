@@ -24,10 +24,7 @@ class DashboardController extends Controller
         AverageDailyExpenseRequest $request,
         ExpenseService $expenseService
     ) {
-        $dateData = new DateData(
-            month: $request->integer('month', 1),
-            year: $request->integer('year', now()->year)
-        );
+        $dateData = DateData::createFromRequest($request);
         $expenseData = new ExpenseData(
             userId: $request->user()->id,
         );
