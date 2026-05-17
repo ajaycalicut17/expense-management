@@ -5,6 +5,7 @@ namespace App\Services\Models;
 use App\Data\Filter\DateData;
 use App\Data\Models\ExpenseData;
 use App\Models\Expense;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class ExpenseService
@@ -59,5 +60,20 @@ class ExpenseService
             ->whereMonth('spent_at', $date->month)
             ->whereYear('spent_at', $date->year)
             ->avg('amount');
+    }
+
+    public function totalExpensesByCategory(
+        ExpenseData $expense,
+        DateData $date
+    ): Collection {
+        return Expense::query()
+            ->select('categories.name')
+            ->selectRaw('SUM(amount) as total')
+            ->join('categories', 'expenses.category_id', '=', 'categories.id')
+            ->when($expense->userId, fn ($query) => $query->where('user_id', $expense->userId))
+            ->whereMonth('spent_at', $date->month)
+            ->whereYear('spent_at', $date->year)
+            ->groupBy('category_id')
+            ->get();
     }
 }

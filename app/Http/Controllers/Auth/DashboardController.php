@@ -6,7 +6,9 @@ use App\Data\Filter\DateData;
 use App\Data\Models\ExpenseData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\Dashboard\AverageDailyExpenseRequest;
+use App\Http\Requests\Auth\Dashboard\TotalExpensesByCategoryRequest;
 use App\Http\Resources\Auth\AverageDailyExpenseResource;
+use App\Http\Resources\Auth\TotalExpensesByCategoryResource;
 use App\Services\Models\ExpenseService;
 use App\Services\Models\UserService;
 use Illuminate\View\View;
@@ -23,7 +25,7 @@ class DashboardController extends Controller
     public function averageDailyExpense(
         AverageDailyExpenseRequest $request,
         ExpenseService $expenseService
-    ) {
+    ): AverageDailyExpenseResource {
         $dateData = DateData::createFromRequest($request);
         $expenseData = new ExpenseData(
             userId: $request->user()->id,
@@ -34,5 +36,17 @@ class DashboardController extends Controller
         );
 
         return AverageDailyExpenseResource::make($averageDailyExpense);
+    }
+
+    public function totalExpensesByCategory(
+        TotalExpensesByCategoryRequest $request,
+        ExpenseService $expenseService
+    ): TotalExpensesByCategoryResource {
+        $dateData = DateData::createFromRequest($request);
+        $expenseData = ExpenseData::createFromRequest($request);
+
+        $totalExpenseByCategory = $expenseService->totalExpensesByCategory($expenseData, $dateData);
+
+        return TotalExpensesByCategoryResource::make($totalExpenseByCategory);
     }
 }

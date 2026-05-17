@@ -89,32 +89,6 @@
     </div>
 
     <script>
-        const ctx = document.getElementById('expenseByCategory');
-
-        const data = {
-            labels: [
-                'Red',
-                'Blue',
-                'Yellow'
-            ],
-            datasets: [{
-                label: 'Total Expenses',
-                data: [300, 50, 100],
-                hoverOffset: 4
-            }]
-        };
-
-        new Chart(ctx, {
-            type: 'doughnut',
-            data: data,
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
 
         // Average Daily Expenses API call
         $(document).ready(function() {
@@ -142,6 +116,71 @@
 
             fetchAverageDailyExpenses();
             $('#monthSelector, #yearSelector').on('change', fetchAverageDailyExpenses);
+
+            // Total Expenses by Category
+            let expenseChart = null;
+
+            function fetchTotalExpensesByCategory() {
+                const userId = $('#userSelector').val();
+                const month = $('#categoryMonthSelector').val();
+                const year = $('#categoryYearSelector').val();
+
+                $.ajax({
+                    url: '{{ route('total-expenses-by-category') }}',
+                    method: 'GET',
+                    data: {
+                        user_id: userId,
+                        month: month,
+                        year: year
+                    },
+                    success: function(response) {
+
+                        const ctx = document.getElementById('expenseByCategory');
+
+                        // Destroy existing chart if it exists
+                        if (expenseChart) {
+                            expenseChart.destroy();
+                        }
+
+                        const data = {
+                            labels: response.labels,
+                            datasets: [{
+                                label: 'Total Expenses',
+                                data: response.data,
+                                hoverOffset: 4
+                            }]
+                        };
+
+                        expenseChart = new Chart(ctx, {
+                            type: 'doughnut',
+                            data: data,
+                            options: {
+                                scales: {
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                }
+                            }
+                        });
+                        
+                        const monthNames = [
+                            'January', 'February', 'March', 'April',
+                            'May', 'June', 'July', 'August',
+                            'September', 'October', 'November', 'December'
+                        ];
+
+                        $('#categoryMonthLabel').text(
+                            monthNames[month - 1] + ' ' + year
+                        );
+                    },
+                    error: function(xhr) {
+                        console.error('Error fetching total expenses by category:', xhr);
+                    }
+                });
+            }
+
+            fetchTotalExpensesByCategory();
+            $('#userSelector, #categoryMonthSelector, #categoryYearSelector').on('change', fetchTotalExpensesByCategory);
         });
     </script>
 </x-layouts.app>

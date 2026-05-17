@@ -47,5 +47,6 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/dashboard', 'index')->name('dashboard.index');
         Route::get('/average-daily-expense', 'averageDailyExpense')->name('average-daily-expense');
+        Route::get('/total-expenses-by-category', 'totalExpensesByCategory')->name('total-expenses-by-category');
     });
 });
