@@ -32,9 +32,12 @@ php artisan key:generate
 ```
 
 ```bash
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
 DB_DATABASE=laravel
-DB_USERNAME=sail
-DB_PASSWORD=password
+DB_USERNAME=root
+DB_PASSWORD=
 ```
 
 ```bash
@@ -50,5 +53,5 @@ php artisan serve
 ```
 
 ```bash
-Login URL: http://localhost
+Login URL: http://127.0.0.1:8000
 ```
