@@ -46,3 +46,8 @@ php artisan serve
 ```bash
 Login URL: http://127.0.0.1:8000
 ```
+## For Testing
+
+```bash
+php artisan test
+```
