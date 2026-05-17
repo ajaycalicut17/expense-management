@@ -2,6 +2,7 @@
 
 namespace App\Services\Models;
 
+use App\Data\Filter\DateData;
 use App\Data\Models\ExpenseData;
 use App\Models\Expense;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -47,5 +48,16 @@ class ExpenseService
         $expense->save();
 
         return $expense;
+    }
+
+    public function averageDailyExpense(
+        ExpenseData $expense,
+        DateData $date
+    ): ?float {
+        return Expense::query()
+            ->where('user_id', $expense->userId)
+            ->whereMonth('spent_at', $date->month)
+            ->whereYear('spent_at', $date->year)
+            ->avg('amount');
     }
 }

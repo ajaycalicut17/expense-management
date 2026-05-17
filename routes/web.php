@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\DashboardController;
 use App\Http\Controllers\Auth\ExpenseController;
 use App\Http\Controllers\Guest\LoginController;
 use App\Http\Controllers\Guest\RegisterController;
@@ -25,8 +26,6 @@ Route::middleware('auth')->group(function () {
         Route::post('/logout', 'logout')->name('logout');
     });
 
-    Route::view('/dashboard', 'auth.dashboard.index')->name('dashboard.index');
-
     Route::resource('expense', ExpenseController::class)
         ->middlewareFor(['index'], [
             'can:viewAny,'.Expense::class,
@@ -43,4 +42,10 @@ Route::middleware('auth')->group(function () {
         ->middlewareFor(['destroy'], [
             'can:delete,expense',
         ]);
+
+    Route::controller(DashboardController::class)->group(function () {
+
+        Route::get('/dashboard', 'index')->name('dashboard.index');
+        Route::get('/average-daily-expense', 'averageDailyExpense')->name('average-daily-expense');
+    });
 });

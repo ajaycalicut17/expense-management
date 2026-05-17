@@ -4,6 +4,7 @@ namespace App\Services\Models;
 
 use App\Data\Models\UserData;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 
 class UserService
 {
@@ -16,5 +17,15 @@ class UserService
         $user->save();
 
         return $user;
+    }
+
+    public function all(): Collection
+    {
+        return User::query()
+            ->select([
+                'id',
+                'name',
+            ])
+            ->get();
     }
 }
