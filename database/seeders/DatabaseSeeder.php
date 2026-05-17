@@ -17,15 +17,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $users = User::factory(10)->create();
+        // $users = User::factory(10)->create();
 
         $categories = Category::factory(10)->create();
 
-        Expense::factory(10)
-            ->recycle([
-                $users,
-                $categories,
-            ])
-            ->create();
+        // Expense::factory(10)
+        //     ->recycle([
+        //         $users,
+        //         $categories,
+        //     ])
+        //     ->create();
     }
 }
