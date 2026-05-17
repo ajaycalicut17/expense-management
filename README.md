@@ -20,10 +20,6 @@ composer install
 ```
 
 ```bash
-npm install
-```
-
-```bash
 cp .env.example .env
 ```
 
@@ -42,10 +38,6 @@ DB_PASSWORD=
 
 ```bash
 php artisan migrate --seed
-```
-
-```bash
-npm run dev
 ```
 
 ```bash
