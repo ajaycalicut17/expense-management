@@ -49,7 +49,7 @@
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 bg-white border-b border-gray-200">
                         <div class="flex items-center justify-between mb-4">
-                            <h3 class="text-lg font-semibold text-gray-800">Total Expenses by Category</h3>
+                            <h3 class="text-lg font-semibold text-gray-800">Total Expenses per Category</h3>
                         </div>
                         <div class="flex gap-2 mb-4 flex-wrap">
                             <select id="userSelector" class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 flex-1 min-w-[120px]">
