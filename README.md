@@ -1,11 +1,11 @@
 # Expense Management
 
-### Requirement
+## Requirement
 #### PHP Version: 8.5.5
 #### Composer Version: 2.9.7
 #### Node Version: 24.14.1
 
-### Installation
+## Installation
 
 ```bash
 git clone https://github.com/ajaycalicut17/expense-management.git
