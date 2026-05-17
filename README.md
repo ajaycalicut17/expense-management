@@ -54,7 +54,7 @@ php artisan test
 ## Development Highlights
 #### Stored amounts in cents to ensure accurate financial calculations.
 #### Used custom AmountCast for automatic currency conversion.
-#### Organized model relationships using reusable Laravel traits App\Concerns\Models\Relationships.
+#### Organized model relationships using reusable PHP traits, App\Concerns\Models\Relationships.
 #### Used DTOs for clean and structured data handling, UserData.
 #### Implemented category caching to improve performance.
 #### Automatically cleared cache using CategoryObserver when category data changes.
