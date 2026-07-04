@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Enums\RoleEnum;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Tests\TestCase;
 
@@ -43,6 +44,7 @@ class RegisterTest extends TestCase
 
         $response->assertValid();
         $this->assertDatabaseHas('users', [
+            'role' => RoleEnum::USER,
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);

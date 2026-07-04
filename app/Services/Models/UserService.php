@@ -11,6 +11,7 @@ class UserService
     public function create(UserData $data): User
     {
         $user = new User;
+        $user->role = $data->role;
         $user->name = $data->name;
         $user->email = $data->email;
         $user->password = $data->password;

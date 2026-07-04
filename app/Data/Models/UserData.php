@@ -2,6 +2,7 @@
 
 namespace App\Data\Models;
 
+use App\Enums\RoleEnum;
 use Illuminate\Http\Request;
 
 class UserData
@@ -11,6 +12,7 @@ class UserData
      */
     public function __construct(
         public ?int $id = null,
+        public ?RoleEnum $role = null,
         public ?string $name = null,
         public ?string $email = null,
         public ?string $password = null,

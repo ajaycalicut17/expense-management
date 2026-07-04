@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\RoleEnum;
 use App\Models\Category;
 use App\Models\Expense;
 use App\Models\User;
@@ -17,6 +18,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        User::factory()->create([
+            'role' => RoleEnum::ADMIN,
+            'name' => 'Admin',
+            'email' => 'admin@example.com',
+        ]);
+
         // $users = User::factory(10)->create();
 
         $categories = Category::factory(10)->create();

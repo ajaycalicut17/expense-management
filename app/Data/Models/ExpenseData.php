@@ -2,7 +2,9 @@
 
 namespace App\Data\Models;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class ExpenseData
 {
@@ -19,7 +21,7 @@ class ExpenseData
     {
         return new self(
             id: $request->input('id'),
-            userId: $request->input('user_id'),
+            userId: Gate::allows('viewAny', User::class) ? $request->input('user_id') : $request->user()->id,
             categoryId: $request->input('category_id'),
             amount: $request->input('amount'),
             description: $request->input('description'),
