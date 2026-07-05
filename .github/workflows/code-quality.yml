@@ -50,8 +50,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5
         with:
-            # Must be used to trigger workflow after push
-            token: ${{ secrets.ACCESS_TOKEN }}
+          # Must be used to trigger workflow after push
+          token: ${{ secrets.ACCESS_TOKEN }}
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
