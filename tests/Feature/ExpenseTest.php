@@ -12,14 +12,14 @@ class ExpenseTest extends TestCase
 {
     use LazilyRefreshDatabase;
 
-    public function test_redirects_unauthenticated_user_to_login()
+    public function test_redirects_unauthenticated_user_to_login(): void
     {
         $response = $this->get('/expense');
 
         $response->assertRedirect('/');
     }
 
-    public function test_authenticated_user_can_access_expense_page()
+    public function test_authenticated_user_can_access_expense_page(): void
     {
         $user = User::factory()->create();
         $response = $this->actingAs($user)->get('/expense');
@@ -27,7 +27,7 @@ class ExpenseTest extends TestCase
         $response->assertSuccessful();
     }
 
-    public function test_index_page_shows_paginated_expenses()
+    public function test_index_page_shows_paginated_expenses(): void
     {
         $user = User::factory()->create();
         $response = $this->actingAs($user)->get('/expense');
@@ -47,7 +47,7 @@ class ExpenseTest extends TestCase
         ]);
     }
 
-    public function test_create_page_shows_expense_create_form()
+    public function test_create_page_shows_expense_create_form(): void
     {
         $user = User::factory()->create();
         $response = $this->actingAs($user)->get('/expense/create');
@@ -58,7 +58,7 @@ class ExpenseTest extends TestCase
         ]);
     }
 
-    public function test_store_validation_fails_with_invalid_data()
+    public function test_store_validation_fails_with_invalid_data(): void
     {
         $user = User::factory()->create();
         $response = $this->actingAs($user)->post('/expense', [
@@ -76,7 +76,7 @@ class ExpenseTest extends TestCase
         ]);
     }
 
-    public function test_store_creates_new_expense()
+    public function test_store_creates_new_expense(): void
     {
         $user = User::factory()->create();
         $category = Category::factory()->create();
@@ -100,7 +100,7 @@ class ExpenseTest extends TestCase
         ]);
     }
 
-    public function test_show_page_shows_expense_details()
+    public function test_show_page_shows_expense_details(): void
     {
         $user = User::factory()->create();
         $expense = Expense::factory()->create([
@@ -116,7 +116,7 @@ class ExpenseTest extends TestCase
         ]);
     }
 
-    public function test_edit_page_shows_expense_edit_form()
+    public function test_edit_page_shows_expense_edit_form(): void
     {
         $user = User::factory()->create();
         $expense = Expense::factory()->create([
@@ -132,7 +132,7 @@ class ExpenseTest extends TestCase
         ]);
     }
 
-    public function test_update_form_validation()
+    public function test_update_form_validation(): void
     {
         $user = User::factory()->create();
         $expense = Expense::factory()->create([
@@ -154,7 +154,7 @@ class ExpenseTest extends TestCase
         ]);
     }
 
-    public function test_update_expense()
+    public function test_update_expense(): void
     {
         $user = User::factory()->create();
         $expense = Expense::factory()->create([
@@ -181,7 +181,7 @@ class ExpenseTest extends TestCase
         ]);
     }
 
-    public function test_delete_expense()
+    public function test_delete_expense(): void
     {
         $user = User::factory()->create();
         $expense = Expense::factory()->create([

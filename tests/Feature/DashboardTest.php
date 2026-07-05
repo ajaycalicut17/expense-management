@@ -14,7 +14,7 @@ class DashboardTest extends TestCase
 {
     use LazilyRefreshDatabase;
 
-    public function test_dashboard_returns_200()
+    public function test_dashboard_returns_200(): void
     {
         $user = User::factory()->create();
         $response = $this->actingAs($user)->get('/dashboard');
@@ -22,7 +22,7 @@ class DashboardTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_average_daily_expense_response()
+    public function test_average_daily_expense_response(): void
     {
         $now = now();
         $user = User::factory()->create();
@@ -35,7 +35,7 @@ class DashboardTest extends TestCase
         ]);
     }
 
-    public function test_average_daily_expense_calculation()
+    public function test_average_daily_expense_calculation(): void
     {
         $user = User::factory()->create();
         $now = now();
@@ -53,7 +53,7 @@ class DashboardTest extends TestCase
         ]);
     }
 
-    public function test_total_expenses_by_category_response()
+    public function test_total_expenses_by_category_response(): void
     {
         $now = now();
         $user = User::factory()->create();
@@ -65,7 +65,7 @@ class DashboardTest extends TestCase
         ]);
     }
 
-    public function test_total_expenses_by_category_calculation()
+    public function test_total_expenses_by_category_calculation(): void
     {
         $now = now();
         $user = User::factory()->create([
@@ -90,7 +90,7 @@ class DashboardTest extends TestCase
         ]);
     }
 
-    public function test_total_expenses_by_category_with_respect_to_user()
+    public function test_total_expenses_by_category_with_respect_to_user(): void
     {
         $now = now();
         $category = Category::factory()->create();
@@ -136,7 +136,7 @@ class DashboardTest extends TestCase
         ]);
     }
 
-    public function test_total_expenses_by_category_with_respect_to_user_role()
+    public function test_total_expenses_by_category_with_respect_to_user_role(): void
     {
         $now = now();
         $category = Category::factory()->create();
@@ -182,7 +182,7 @@ class DashboardTest extends TestCase
         ]);
     }
 
-    public function test_only_admin_can_see_all_users()
+    public function test_only_admin_can_see_all_users(): void
     {
         $admin = User::factory()->create([
             'role' => RoleEnum::ADMIN,
