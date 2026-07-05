@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Guest;
 
 use App\Data\Models\UserData;
+use App\Enums\RoleEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Guest\StoreRegisterRequest;
 use App\Services\Models\UserService;
@@ -21,6 +22,7 @@ class RegisterController extends Controller
         UserService $userService
     ): RedirectResponse {
         $data = UserData::createFromRequest($request);
+        $data->role = RoleEnum::USER;
 
         $userService->create($data);
 

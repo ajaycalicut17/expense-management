@@ -52,12 +52,14 @@
                             <h3 class="text-lg font-semibold text-gray-800">Total Expenses per Category</h3>
                         </div>
                         <div class="flex gap-2 mb-4 flex-wrap">
+                            @isset($users)
                             <select id="userSelector" class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 flex-1 min-w-[120px]">
                                 <option value="">Select User</option>
-                                @foreach($users ?? [] as $user)
+                                @foreach($users as $user)
                                     <option value="{{ $user->id }}">{{ $user->name }}</option>
                                 @endforeach
                             </select>
+                            @endisset
                             <select id="categoryMonthSelector" class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 flex-1 min-w-[120px]">
                                 <option value="1">January</option>
                                 <option value="2">February</option>

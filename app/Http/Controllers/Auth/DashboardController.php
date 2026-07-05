@@ -9,17 +9,22 @@ use App\Http\Requests\Auth\Dashboard\AverageDailyExpenseRequest;
 use App\Http\Requests\Auth\Dashboard\TotalExpensesByCategoryRequest;
 use App\Http\Resources\Auth\AverageDailyExpenseResource;
 use App\Http\Resources\Auth\TotalExpensesByCategoryResource;
+use App\Models\User;
 use App\Services\Models\ExpenseService;
 use App\Services\Models\UserService;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
 class DashboardController extends Controller
 {
     public function index(UserService $userService): View
     {
-        $users = $userService->all();
+        $data = [];
+        if (Gate::allows('viewAny', User::class)) {
+            $data['users'] = $userService->all();
+        }
 
-        return view('auth.dashboard.index', compact('users'));
+        return view('auth.dashboard.index', $data);
     }
 
     public function averageDailyExpense(
