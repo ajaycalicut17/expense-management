@@ -8,7 +8,7 @@ use App\Enums\RoleEnum;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Tests\TestCase;
 
-class RegisterTest extends TestCase
+final class RegisterTest extends TestCase
 {
     use LazilyRefreshDatabase;
 
