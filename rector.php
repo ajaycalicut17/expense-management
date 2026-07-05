@@ -23,7 +23,7 @@ return RectorConfig::configure()
         typeDeclarationDocblocks: true,
         privatization: true,
         naming: true,
-        // namedArgs: true,
+        namedArgs: true,
         // earlyReturn: true,
         // strictBooleans: true,
         // carbon: true,
