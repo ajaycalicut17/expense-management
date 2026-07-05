@@ -24,7 +24,10 @@ jobs:
           tools: pint
 
       - name: Run Pint
-        run: pint --test
+        run: pint
+ 
+      - name: Commit linted files
+        uses: stefanzweifel/git-auto-commit-action@v6
 
   tests:
     runs-on: ubuntu-latest
