@@ -24,7 +24,7 @@ class DashboardController extends Controller
             $data['users'] = $userService->all();
         }
 
-        return view('auth.dashboard.index', $data);
+return view('auth.dashboard.index', $data);
     }
 
     public function averageDailyExpense(
