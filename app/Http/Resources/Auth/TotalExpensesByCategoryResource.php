@@ -17,7 +17,7 @@ class TotalExpensesByCategoryResource extends JsonResource
     {
         return [
             'labels' => $this->resource->pluck('name'),
-            'data' => $this->resource->pluck('total')->map(fn ($total) => (float) (($total ?? 0) / 100)),
+            'data' => $this->resource->pluck('total')->map(fn ($total): float => (float) (($total ?? 0) / 100)),
         ];
     }
 }
