@@ -34,6 +34,8 @@ jobs:
  
       - name: Commit linted files
         uses: stefanzweifel/git-auto-commit-action@v7
+        with:
+          commit_message: Apply pint changes
 
   tests:
     runs-on: ubuntu-latest
