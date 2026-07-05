@@ -13,6 +13,7 @@ class AverageDailyExpenseResource extends JsonResource
      *
      * @return array<string, mixed>
      */
+    #[\Override]
     public function toArray(Request $request): array
     {
         $amount = (float) (($this->resource ?? 0) / 100);

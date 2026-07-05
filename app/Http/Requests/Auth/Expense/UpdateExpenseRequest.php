@@ -30,6 +30,7 @@ class UpdateExpenseRequest extends FormRequest
         ];
     }
 
+    #[\Override]
     public function attributes(): array
     {
         return [

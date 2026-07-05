@@ -16,6 +16,7 @@ class Expense extends Model
     /** @use HasFactory<ExpenseFactory> */
     use BelongsToCategory, BelongsToUser, HasFactory, SoftDeletes;
 
+    #[\Override]
     protected function casts(): array
     {
         return [
