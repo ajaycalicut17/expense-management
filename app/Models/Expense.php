@@ -7,7 +7,6 @@ namespace App\Models;
 use App\Casts\AmountCast;
 use App\Concerns\Concerns\Models\Relationships\BelongsToCategory;
 use App\Concerns\Models\Relationships\BelongsToUser;
-use Database\Factories\ExpenseFactory;
 use Illuminate\Database\Eloquent\Casts\AsStringable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

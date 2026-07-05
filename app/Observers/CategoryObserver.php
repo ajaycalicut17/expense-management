@@ -60,7 +60,7 @@ class CategoryObserver
     }
 
     /**
-     * @param string[] $keys
+     * @param  string[]  $keys
      */
     private function clear(array $keys): void
     {
