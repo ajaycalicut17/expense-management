@@ -11,6 +11,7 @@ use App\Http\Requests\Auth\Expense\UpdateExpenseRequest;
 use App\Models\Expense;
 use App\Services\Models\CategoryService;
 use App\Services\Models\ExpenseService;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -28,7 +29,7 @@ class ExpenseController extends Controller
 
     public function create(CategoryService $categoryService): View
     {
-        $categories = Cache::rememberForever('expenses.categories', fn (): \Illuminate\Database\Eloquent\Collection => $categoryService->all());
+        $categories = Cache::rememberForever('expenses.categories', fn (): Collection => $categoryService->all());
 
         return view('auth.expense.create', ['categories' => $categories]);
     }
@@ -49,7 +50,7 @@ class ExpenseController extends Controller
         Expense $expense,
         CategoryService $categoryService
     ): View {
-        $categories = Cache::rememberForever('expenses.categories', fn (): \Illuminate\Database\Eloquent\Collection => $categoryService->all());
+        $categories = Cache::rememberForever('expenses.categories', fn (): Collection => $categoryService->all());
 
         return view('auth.expense.show', ['expense' => $expense, 'categories' => $categories]);
     }
@@ -58,7 +59,7 @@ class ExpenseController extends Controller
         Expense $expense,
         CategoryService $categoryService
     ): View {
-        $categories = Cache::rememberForever('expenses.categories', fn (): \Illuminate\Database\Eloquent\Collection => $categoryService->all());
+        $categories = Cache::rememberForever('expenses.categories', fn (): Collection => $categoryService->all());
 
         return view('auth.expense.edit', ['expense' => $expense, 'categories' => $categories]);
     }
