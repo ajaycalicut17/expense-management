@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature;
 
 use App\Enums\RoleEnum;
@@ -10,7 +12,7 @@ use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Support\Number;
 use Tests\TestCase;
 
-class DashboardTest extends TestCase
+final class DashboardTest extends TestCase
 {
     use LazilyRefreshDatabase;
 

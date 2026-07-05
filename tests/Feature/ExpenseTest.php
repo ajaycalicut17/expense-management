@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature;
 
 use App\Models\Category;
@@ -8,7 +10,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Tests\TestCase;
 
-class ExpenseTest extends TestCase
+final class ExpenseTest extends TestCase
 {
     use LazilyRefreshDatabase;
 

@@ -28,7 +28,7 @@ return RectorConfig::configure()
         strictBooleans: true,
         carbon: true,
         // rectorPreset: true,
-        // phpunitCodeQuality: true,
+        phpunitCodeQuality: true,
         // doctrineCodeQuality: true,
         // symfonyCodeQuality: true,
         // symfonyConfigs: true
