@@ -21,14 +21,14 @@ class ExpenseController extends Controller
         $data->userId = Auth::id();
         $expenses = $expenseService->paginate($data);
 
-        return view('auth.expense.index', compact('expenses'));
+        return view('auth.expense.index', ['expenses' => $expenses]);
     }
 
     public function create(CategoryService $categoryService): View
     {
         $categories = Cache::rememberForever('expenses.categories', fn () => $categoryService->all());
 
-        return view('auth.expense.create', compact('categories'));
+        return view('auth.expense.create', ['categories' => $categories]);
     }
 
     public function store(
@@ -49,7 +49,7 @@ class ExpenseController extends Controller
     ): View {
         $categories = Cache::rememberForever('expenses.categories', fn () => $categoryService->all());
 
-        return view('auth.expense.show', compact('expense', 'categories'));
+        return view('auth.expense.show', ['expense' => $expense, 'categories' => $categories]);
     }
 
     public function edit(
@@ -58,7 +58,7 @@ class ExpenseController extends Controller
     ): View {
         $categories = Cache::rememberForever('expenses.categories', fn () => $categoryService->all());
 
-        return view('auth.expense.edit', compact('expense', 'categories'));
+        return view('auth.expense.edit', ['expense' => $expense, 'categories' => $categories]);
     }
 
     public function update(
