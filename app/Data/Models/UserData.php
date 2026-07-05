@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Data\Models;
 
 use App\Enums\RoleEnum;

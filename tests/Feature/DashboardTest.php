@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature;
 
 use App\Enums\RoleEnum;
@@ -10,25 +12,25 @@ use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Support\Number;
 use Tests\TestCase;
 
-class DashboardTest extends TestCase
+final class DashboardTest extends TestCase
 {
     use LazilyRefreshDatabase;
 
     public function test_dashboard_returns_200(): void
     {
         $user = User::factory()->create();
-        $response = $this->actingAs($user)->get('/dashboard');
+        $testResponse = $this->actingAs($user)->get('/dashboard');
 
-        $response->assertStatus(200);
+        $testResponse->assertStatus(200);
     }
 
     public function test_average_daily_expense_response(): void
     {
         $now = now();
         $user = User::factory()->create();
-        $response = $this->actingAs($user)->get('/average-daily-expense?month='.$now->month.'&year='.$now->year);
+        $testResponse = $this->actingAs($user)->get('/average-daily-expense?month='.$now->month.'&year='.$now->year);
 
-        $response->assertJsonStructure([
+        $testResponse->assertJsonStructure([
             'data' => [
                 'average_daily_expenses',
             ],
@@ -44,9 +46,9 @@ class DashboardTest extends TestCase
             'amount' => 100,
             'spent_at' => $now,
         ]);
-        $response = $this->actingAs($user)->get('/average-daily-expense?month='.$now->month.'&year='.$now->year);
+        $testResponse = $this->actingAs($user)->get('/average-daily-expense?month='.$now->month.'&year='.$now->year);
 
-        $response->assertJson([
+        $testResponse->assertJson([
             'data' => [
                 'average_daily_expenses' => Number::currency(100),
             ],
@@ -57,9 +59,9 @@ class DashboardTest extends TestCase
     {
         $now = now();
         $user = User::factory()->create();
-        $response = $this->actingAs($user)->get('/total-expenses-by-category?month='.$now->month.'&year='.$now->year);
+        $testResponse = $this->actingAs($user)->get('/total-expenses-by-category?month='.$now->month.'&year='.$now->year);
 
-        $response->assertJsonStructure([
+        $testResponse->assertJsonStructure([
             'labels',
             'data',
         ]);
@@ -78,9 +80,9 @@ class DashboardTest extends TestCase
             'amount' => 100,
             'spent_at' => $now,
         ]);
-        $response = $this->actingAs($user)->get('/total-expenses-by-category?user_id='.$user->id.'&month='.$now->month.'&year='.$now->year);
+        $testResponse = $this->actingAs($user)->get('/total-expenses-by-category?user_id='.$user->id.'&month='.$now->month.'&year='.$now->year);
 
-        $response->assertJson([
+        $testResponse->assertJson([
             'labels' => [
                 $category->name,
             ],

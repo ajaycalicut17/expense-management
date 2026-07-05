@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Models;
 
 use App\Data\Filter\DateData;
@@ -10,7 +12,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class ExpenseService
 {
-    public function paginate(ExpenseData $data): LengthAwarePaginator
+    public function paginate(ExpenseData $expenseData): LengthAwarePaginator
     {
         return Expense::query()
             ->select([
@@ -23,56 +25,56 @@ class ExpenseService
             ->with([
                 'category:id,name',
             ])
-            ->where('user_id', $data->userId)
+            ->where('user_id', $expenseData->userId)
             ->paginate(10);
     }
 
-    public function create(ExpenseData $data): Expense
+    public function create(ExpenseData $expenseData): Expense
     {
         $expense = new Expense;
-        $expense->user_id = $data->userId;
-        $expense->category_id = $data->categoryId;
-        $expense->amount = $data->amount;
-        $expense->description = $data->description;
-        $expense->spent_at = $data->spentAt;
+        $expense->user_id = $expenseData->userId;
+        $expense->category_id = $expenseData->categoryId;
+        $expense->amount = $expenseData->amount;
+        $expense->description = $expenseData->description;
+        $expense->spent_at = $expenseData->spentAt;
         $expense->save();
 
         return $expense;
     }
 
-    public function update(Expense $expense, ExpenseData $data): Expense
+    public function update(Expense $expense, ExpenseData $expenseData): Expense
     {
-        $expense->category_id = $data->categoryId;
-        $expense->amount = $data->amount;
-        $expense->description = $data->description;
-        $expense->spent_at = $data->spentAt;
+        $expense->category_id = $expenseData->categoryId;
+        $expense->amount = $expenseData->amount;
+        $expense->description = $expenseData->description;
+        $expense->spent_at = $expenseData->spentAt;
         $expense->save();
 
         return $expense;
     }
 
     public function averageDailyExpense(
-        ExpenseData $expense,
-        DateData $date
+        ExpenseData $expenseData,
+        DateData $dateData
     ): ?float {
         return Expense::query()
-            ->where('user_id', $expense->userId)
-            ->whereMonth('spent_at', $date->month)
-            ->whereYear('spent_at', $date->year)
+            ->where('user_id', $expenseData->userId)
+            ->whereMonth('spent_at', $dateData->month)
+            ->whereYear('spent_at', $dateData->year)
             ->avg('amount');
     }
 
     public function totalExpensesByCategory(
-        ExpenseData $expense,
-        DateData $date
+        ExpenseData $expenseData,
+        DateData $dateData
     ): Collection {
         return Expense::query()
             ->select('categories.name')
             ->selectRaw('SUM(amount) as total')
             ->join('categories', 'expenses.category_id', '=', 'categories.id')
-            ->when($expense->userId, fn ($query) => $query->where('user_id', $expense->userId))
-            ->whereMonth('spent_at', $date->month)
-            ->whereYear('spent_at', $date->year)
+            ->when($expenseData->userId, fn ($query) => $query->where('user_id', $expenseData->userId))
+            ->whereMonth('spent_at', $dateData->month)
+            ->whereYear('spent_at', $dateData->year)
             ->groupBy('category_id')
             ->get();
     }

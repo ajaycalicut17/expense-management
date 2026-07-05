@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Observers\CategoryObserver;
@@ -9,7 +11,7 @@ use Illuminate\Database\Eloquent\Casts\AsStringable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-#[ObservedBy([CategoryObserver::class])]
+#[ObservedBy(classes: [CategoryObserver::class])]
 class Category extends Model
 {
     /** @use HasFactory<CategoryFactory> */

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Auth;
 
 use App\Data\Models\ExpenseData;
@@ -16,29 +18,29 @@ use Illuminate\View\View;
 
 class ExpenseController extends Controller
 {
-    public function index(ExpenseService $expenseService, ExpenseData $data): View
+    public function index(ExpenseService $expenseService, ExpenseData $expenseData): View
     {
-        $data->userId = Auth::id();
-        $expenses = $expenseService->paginate($data);
+        $expenseData->userId = Auth::id();
+        $expenseService->paginate($expenseData);
 
-        return view('auth.expense.index', compact('expenses'));
+        return view('auth.expense.index', ['expenses' => $expenses]);
     }
 
     public function create(CategoryService $categoryService): View
     {
-        $categories = Cache::rememberForever('expenses.categories', fn () => $categoryService->all());
+        $categories = Cache::rememberForever('expenses.categories', fn (): \Illuminate\Database\Eloquent\Collection => $categoryService->all());
 
-        return view('auth.expense.create', compact('categories'));
+        return view('auth.expense.create', ['categories' => $categories]);
     }
 
     public function store(
-        StoreExpenseRequest $request,
+        StoreExpenseRequest $storeExpenseRequest,
         ExpenseService $expenseService
     ): RedirectResponse {
-        $data = ExpenseData::createFromRequest($request);
-        $data->userId = $request->user()->id;
+        $expenseData = ExpenseData::createFromRequest($storeExpenseRequest);
+        $expenseData->userId = $storeExpenseRequest->user()->id;
 
-        $expenseService->create($data);
+        $expenseService->create($expenseData);
 
         return to_route('expense.index')->with('status', 'Expense added successfully');
     }
@@ -47,30 +49,30 @@ class ExpenseController extends Controller
         Expense $expense,
         CategoryService $categoryService
     ): View {
-        $categories = Cache::rememberForever('expenses.categories', fn () => $categoryService->all());
+        $categories = Cache::rememberForever('expenses.categories', fn (): \Illuminate\Database\Eloquent\Collection => $categoryService->all());
 
-        return view('auth.expense.show', compact('expense', 'categories'));
+        return view('auth.expense.show', ['expense' => $expense, 'categories' => $categories]);
     }
 
     public function edit(
         Expense $expense,
         CategoryService $categoryService
     ): View {
-        $categories = Cache::rememberForever('expenses.categories', fn () => $categoryService->all());
+        $categories = Cache::rememberForever('expenses.categories', fn (): \Illuminate\Database\Eloquent\Collection => $categoryService->all());
 
-        return view('auth.expense.edit', compact('expense', 'categories'));
+        return view('auth.expense.edit', ['expense' => $expense, 'categories' => $categories]);
     }
 
     public function update(
-        UpdateExpenseRequest $request,
+        UpdateExpenseRequest $updateExpenseRequest,
         Expense $expense,
         ExpenseService $expenseService
     ): RedirectResponse {
-        $data = ExpenseData::createFromRequest($request);
+        $expenseData = ExpenseData::createFromRequest($updateExpenseRequest);
 
-        $expenseService->update($expense, $data);
+        $expenseService->update($expense, $expenseData);
 
-        return to_route('expense.index', ['page' => $request->input('page')])->with('status', 'Expense updated successfully');
+        return to_route('expense.index', ['page' => $updateExpenseRequest->input('page')])->with('status', 'Expense updated successfully');
     }
 
     public function destroy(Expense $expense): RedirectResponse

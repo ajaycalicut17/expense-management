@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Casts\AmountCast;
@@ -13,9 +15,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Expense extends Model
 {
-    /** @use HasFactory<ExpenseFactory> */
-    use BelongsToCategory, BelongsToUser, HasFactory, SoftDeletes;
-
+    use BelongsToCategory;
+    use BelongsToUser;
+    use HasFactory;
+    use SoftDeletes;
     #[\Override]
     protected function casts(): array
     {

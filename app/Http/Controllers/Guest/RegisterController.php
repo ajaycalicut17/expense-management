@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Guest;
 
 use App\Data\Models\UserData;
@@ -18,13 +20,13 @@ class RegisterController extends Controller
     }
 
     public function store(
-        StoreRegisterRequest $request,
+        StoreRegisterRequest $storeRegisterRequest,
         UserService $userService
     ): RedirectResponse {
-        $data = UserData::createFromRequest($request);
-        $data->role = RoleEnum::USER;
+        $userData = UserData::createFromRequest($storeRegisterRequest);
+        $userData->role = RoleEnum::USER;
 
-        $userService->create($data);
+        $userService->create($userData);
 
         return to_route('index')->with('status', 'User registered successfully');
     }
