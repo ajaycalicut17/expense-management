@@ -26,7 +26,7 @@ return RectorConfig::configure()
         namedArgs: true,
         earlyReturn: true,
         strictBooleans: true,
-        // carbon: true,
+        carbon: true,
         // rectorPreset: true,
         // phpunitCodeQuality: true,
         // doctrineCodeQuality: true,
