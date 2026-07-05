@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Observers;
 
 use App\Models\Category;
@@ -57,10 +59,13 @@ class CategoryObserver
         ]);
     }
 
+    /**
+     * @param  string[]  $keys
+     */
     private function clear(array $keys): void
     {
         array_map(
-            fn ($key) => Cache::forget($key),
+            fn (string $key) => Cache::forget($key),
             $keys
         );
     }
