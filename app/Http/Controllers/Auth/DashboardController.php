@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Auth;
 
 use App\Data\Filter\DateData;
@@ -28,12 +30,12 @@ class DashboardController extends Controller
     }
 
     public function averageDailyExpense(
-        AverageDailyExpenseRequest $request,
+        AverageDailyExpenseRequest $averageDailyExpenseRequest,
         ExpenseService $expenseService
     ): AverageDailyExpenseResource {
-        $dateData = DateData::createFromRequest($request);
+        $dateData = DateData::createFromRequest($averageDailyExpenseRequest);
         $expenseData = new ExpenseData(
-            userId: $request->user()->id,
+            userId: $averageDailyExpenseRequest->user()->id,
         );
         $averageDailyExpense = $expenseService->averageDailyExpense(
             $expenseData,
@@ -44,11 +46,11 @@ class DashboardController extends Controller
     }
 
     public function totalExpensesByCategory(
-        TotalExpensesByCategoryRequest $request,
+        TotalExpensesByCategoryRequest $totalExpensesByCategoryRequest,
         ExpenseService $expenseService
     ): TotalExpensesByCategoryResource {
-        $dateData = DateData::createFromRequest($request);
-        $expenseData = ExpenseData::createFromRequest($request);
+        $dateData = DateData::createFromRequest($totalExpensesByCategoryRequest);
+        $expenseData = ExpenseData::createFromRequest($totalExpensesByCategoryRequest);
 
         $totalExpenseByCategory = $expenseService->totalExpensesByCategory($expenseData, $dateData);
 
