@@ -24,7 +24,7 @@ return RectorConfig::configure()
         privatization: true,
         naming: true,
         namedArgs: true,
-        // earlyReturn: true,
+        earlyReturn: true,
         // strictBooleans: true,
         // carbon: true,
         // rectorPreset: true,
