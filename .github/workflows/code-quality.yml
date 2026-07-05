@@ -6,9 +6,6 @@ on:
   pull_request:
     branches: ["main"]
 
-permissions:
-  contents: write
-
 env:
   PHP_VERSION: "8.5"
 
@@ -27,10 +24,7 @@ jobs:
           tools: pint
 
       - name: Run Pint
-        run: pint
-
-      - name: Commit linted files
-        uses: stefanzweifel/git-auto-commit-action@v6
+        run: pint --test
 
   tests:
     runs-on: ubuntu-latest
