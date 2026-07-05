@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v5
         with:
           # Must be used to trigger workflow after push
-          token: ${{ secrets.ACCESS_TOKEN }}
+          token: ${{ secrets.CODE_QUALITY_ACCESS_TOKEN }}
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -45,7 +45,7 @@ jobs:
         uses: actions/checkout@v5
         with:
           # Must be used to trigger workflow after push
-          token: ${{ secrets.ACCESS_TOKEN }}
+          token: ${{ secrets.CODE_QUALITY_ACCESS_TOKEN }}
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
