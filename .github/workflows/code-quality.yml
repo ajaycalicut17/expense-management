@@ -9,35 +9,34 @@ env:
 
 jobs:
   rector:
-      runs-on: ubuntu-latest
-      if: github.event.pull_request.head.repo.full_name == 'ajaycalicut17/expense-management'
-      steps:
-          -
-              if: github.event.pull_request.head.repo.full_name == github.repository
-              uses: actions/checkout@v5
-              with:
-                  # Must be used to trigger workflow after push
-                  token: ${{ secrets.ACCESS_TOKEN }}
+    runs-on: ubuntu-latest
 
-          -
-              uses: shivammathur/setup-php@v2
-              with:
-                  php-version: ${{ env.PHP_VERSION }}
-                  coverage: none
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+        with:
+          # Must be used to trigger workflow after push
+          token: ${{ secrets.ACCESS_TOKEN }}
 
-          -   uses: "ramsey/composer-install@v3"
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          coverage: none
 
-          -   run: vendor/bin/rector --ansi
-          # @todo apply coding standard if used
+      - name: Install dependencies
+        uses: "ramsey/composer-install@v3"
 
-          -
-              # commit only to core contributors who have repository access
-              uses: stefanzweifel/git-auto-commit-action@v7
-              with:
-                  commit_message: '[rector] Rector fixes'
-                  commit_author: 'GitHub Action <actions@github.com>'
-                  commit_user_email: 'action@github.com'
-                    
+      - name: Run Rector
+        run: vendor/bin/rector --ansi
+ 
+      - name: Commit files
+        uses: stefanzweifel/git-auto-commit-action@v7
+        with:
+          commit_message: '[rector] Rector fixes'
+          commit_author: 'GitHub Action <actions@github.com>'
+          commit_user_email: 'action@github.com'
+
   lint:
     runs-on: ubuntu-latest
 
