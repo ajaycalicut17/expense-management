@@ -7,22 +7,22 @@ use App\Http\Controllers\Guest\RegisterController;
 use App\Models\Expense;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('guest')->group(function () {
+Route::middleware('guest')->group(function (): void {
 
-    Route::controller(LoginController::class)->group(function () {
+    Route::controller(LoginController::class)->group(function (): void {
         Route::get('/', 'index')->name('index');
         Route::post('/login', 'login')->name('login');
     });
 
-    Route::controller(RegisterController::class)->group(function () {
+    Route::controller(RegisterController::class)->group(function (): void {
         Route::get('/register', 'index')->name('register.index');
         Route::post('/register', 'store')->name('register.store');
     });
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth')->group(function (): void {
 
-    Route::controller(LoginController::class)->group(function () {
+    Route::controller(LoginController::class)->group(function (): void {
         Route::post('/logout', 'logout')->name('logout');
     });
 
@@ -43,7 +43,7 @@ Route::middleware('auth')->group(function () {
             'can:delete,expense',
         ]);
 
-    Route::controller(DashboardController::class)->group(function () {
+    Route::controller(DashboardController::class)->group(function (): void {
 
         Route::get('/dashboard', 'index')->name('dashboard.index');
         Route::get('/average-daily-expense', 'averageDailyExpense')->name('average-daily-expense');
