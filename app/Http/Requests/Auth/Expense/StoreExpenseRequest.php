@@ -30,6 +30,7 @@ class StoreExpenseRequest extends FormRequest
         ];
     }
 
+    #[\Override]
     public function attributes(): array
     {
         return [
