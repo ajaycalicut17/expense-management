@@ -107,7 +107,7 @@ class ExpenseTest extends TestCase
             'user_id' => $user->id,
         ]);
 
-        $response = $this->actingAs($user)->get("/expense/{$expense->id}");
+        $response = $this->actingAs($user)->get('/expense/'.$expense->id);
 
         $response->assertSuccessful();
         $response->assertViewHasAll([
@@ -123,7 +123,7 @@ class ExpenseTest extends TestCase
             'user_id' => $user->id,
         ]);
 
-        $response = $this->actingAs($user)->get("/expense/{$expense->id}/edit");
+        $response = $this->actingAs($user)->get(sprintf('/expense/%s/edit', $expense->id));
 
         $response->assertSuccessful();
         $response->assertViewHasAll([
@@ -139,7 +139,7 @@ class ExpenseTest extends TestCase
             'user_id' => $user->id,
         ]);
 
-        $response = $this->actingAs($user)->put("/expense/{$expense->id}", [
+        $response = $this->actingAs($user)->put('/expense/'.$expense->id, [
             'category_id' => '',
             'amount' => '',
             'description' => '',
@@ -188,7 +188,7 @@ class ExpenseTest extends TestCase
             'user_id' => $user->id,
         ]);
 
-        $response = $this->actingAs($user)->delete("/expense/{$expense->id}");
+        $response = $this->actingAs($user)->delete('/expense/'.$expense->id);
 
         $response->assertRedirect('/expense');
         $response->assertSessionHas('status', 'Expense deleted successfully');
