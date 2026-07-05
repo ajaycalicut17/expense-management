@@ -21,6 +21,7 @@ class User extends Authenticatable
 {
     use HasFactory;
     use Notifiable;
+
     /**
      * Get the attributes that should be cast.
      *

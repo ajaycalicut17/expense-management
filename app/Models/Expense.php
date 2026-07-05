@@ -19,6 +19,7 @@ class Expense extends Model
     use BelongsToUser;
     use HasFactory;
     use SoftDeletes;
+
     #[\Override]
     protected function casts(): array
     {
