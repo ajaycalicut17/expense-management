@@ -26,7 +26,7 @@ class ExpenseController extends Controller
 
     public function create(CategoryService $categoryService): View
     {
-        $categories = Cache::rememberForever('expenses.categories', fn () => $categoryService->all());
+        $categories = Cache::rememberForever('expenses.categories', fn (): \Illuminate\Database\Eloquent\Collection => $categoryService->all());
 
         return view('auth.expense.create', ['categories' => $categories]);
     }
@@ -47,7 +47,7 @@ class ExpenseController extends Controller
         Expense $expense,
         CategoryService $categoryService
     ): View {
-        $categories = Cache::rememberForever('expenses.categories', fn () => $categoryService->all());
+        $categories = Cache::rememberForever('expenses.categories', fn (): \Illuminate\Database\Eloquent\Collection => $categoryService->all());
 
         return view('auth.expense.show', ['expense' => $expense, 'categories' => $categories]);
     }
@@ -56,7 +56,7 @@ class ExpenseController extends Controller
         Expense $expense,
         CategoryService $categoryService
     ): View {
-        $categories = Cache::rememberForever('expenses.categories', fn () => $categoryService->all());
+        $categories = Cache::rememberForever('expenses.categories', fn (): \Illuminate\Database\Eloquent\Collection => $categoryService->all());
 
         return view('auth.expense.edit', ['expense' => $expense, 'categories' => $categories]);
     }
