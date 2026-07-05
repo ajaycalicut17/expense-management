@@ -29,7 +29,7 @@ return RectorConfig::configure()
         carbon: true,
         // rectorPreset: true,
         phpunitCodeQuality: true,
-        // doctrineCodeQuality: true,
+        doctrineCodeQuality: true,
         // symfonyCodeQuality: true,
         // symfonyConfigs: true
     );
