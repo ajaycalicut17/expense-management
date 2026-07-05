@@ -15,6 +15,22 @@ return RectorConfig::configure()
         __DIR__.'/tests',
     ])
     ->withPhpSets(php86: true)
-    ->withTypeCoverageLevel(6)
-    ->withDeadCodeLevel(6)
-    ->withCodeQualityLevel(6);
+    ->withPreparedSets(
+        deadCode: true,
+        codeQuality: true,
+        codingStyle: true,
+        typeDeclarations: true,
+        typeDeclarationDocblocks: true,
+        privatization: true,
+        naming: true,
+        namedArgs: true,
+        instanceOf: true,
+        earlyReturn: true,
+        strictBooleans: true,
+        carbon: true,
+        rectorPreset: true,
+        phpunitCodeQuality: true,
+        doctrineCodeQuality: true,
+        symfonyCodeQuality: true,
+        symfonyConfigs: true
+    );
