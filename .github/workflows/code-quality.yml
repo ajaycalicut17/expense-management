@@ -32,10 +32,11 @@ jobs:
       - name: Run Pint
         run: pint
  
-      - name: Commit linted files
+      - name: Commit Pint changes
+        if: github.event_name == 'push'
         uses: stefanzweifel/git-auto-commit-action@v7
         with:
-          commit_message: Apply pint changes
+          commit_message: "style: apply Laravel Pint"
 
   tests:
     runs-on: ubuntu-latest
