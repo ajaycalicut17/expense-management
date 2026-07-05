@@ -6,15 +6,15 @@ on:
   pull_request:
     branches: ["main"]
 
-permissions:
-  contents: write
-      
 env:
   PHP_VERSION: "8.5"
 
 jobs:
   lint:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout code
@@ -32,11 +32,10 @@ jobs:
       - name: Run Pint
         run: pint
  
-      - name: Commit Pint changes
-        if: github.event_name == 'push'
+      - name: Commit linted files
         uses: stefanzweifel/git-auto-commit-action@v7
         with:
-          commit_message: "style: apply Laravel Pint"
+          commit_message: Apply pint changes
 
   tests:
     runs-on: ubuntu-latest
