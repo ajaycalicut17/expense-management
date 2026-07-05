@@ -13,9 +13,15 @@ jobs:
   lint:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
+        with:
+          ref: ${{ github.head_ref }}
+          persist-credentials: true
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -24,7 +30,12 @@ jobs:
           tools: pint
 
       - name: Run Pint
-        run: pint --test
+        run: pint
+ 
+      - name: Commit linted files
+        uses: stefanzweifel/git-auto-commit-action@v7
+        with:
+          commit_message: Apply pint changes
 
   tests:
     runs-on: ubuntu-latest
