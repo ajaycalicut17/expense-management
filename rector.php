@@ -21,7 +21,7 @@ return RectorConfig::configure()
         codingStyle: true,
         typeDeclarations: true,
         typeDeclarationDocblocks: true,
-        // privatization: true,
+        privatization: true,
         // naming: true,
         // namedArgs: true,
         // earlyReturn: true,
