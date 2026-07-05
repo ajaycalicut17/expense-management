@@ -16,10 +16,10 @@ class LoginController extends Controller
         return view('guest.login');
     }
 
-    public function login(LoginRequest $request): RedirectResponse
+    public function login(LoginRequest $loginRequest): RedirectResponse
     {
-        if (Auth::attempt($request->validated())) {
-            $request->session()->regenerate();
+        if (Auth::attempt($loginRequest->validated())) {
+            $loginRequest->session()->regenerate();
 
             return redirect()->intended('dashboard');
         }

@@ -14,29 +14,29 @@ class ExpenseTest extends TestCase
 
     public function test_redirects_unauthenticated_user_to_login(): void
     {
-        $response = $this->get('/expense');
+        $testResponse = $this->get('/expense');
 
-        $response->assertRedirect('/');
+        $testResponse->assertRedirect('/');
     }
 
     public function test_authenticated_user_can_access_expense_page(): void
     {
         $user = User::factory()->create();
-        $response = $this->actingAs($user)->get('/expense');
+        $testResponse = $this->actingAs($user)->get('/expense');
 
-        $response->assertSuccessful();
+        $testResponse->assertSuccessful();
     }
 
     public function test_index_page_shows_paginated_expenses(): void
     {
         $user = User::factory()->create();
-        $response = $this->actingAs($user)->get('/expense');
+        $testResponse = $this->actingAs($user)->get('/expense');
 
-        $response->assertSuccessful();
-        $response->assertViewHasAll([
+        $testResponse->assertSuccessful();
+        $testResponse->assertViewHasAll([
             'expenses',
         ]);
-        $response->assertSeeTextInOrder([
+        $testResponse->assertSeeTextInOrder([
             'Add',
             'Sl.No',
             'Category',
@@ -50,10 +50,10 @@ class ExpenseTest extends TestCase
     public function test_create_page_shows_expense_create_form(): void
     {
         $user = User::factory()->create();
-        $response = $this->actingAs($user)->get('/expense/create');
+        $testResponse = $this->actingAs($user)->get('/expense/create');
 
-        $response->assertSuccessful();
-        $response->assertViewHasAll([
+        $testResponse->assertSuccessful();
+        $testResponse->assertViewHasAll([
             'categories',
         ]);
     }
@@ -61,14 +61,14 @@ class ExpenseTest extends TestCase
     public function test_store_validation_fails_with_invalid_data(): void
     {
         $user = User::factory()->create();
-        $response = $this->actingAs($user)->post('/expense', [
+        $testResponse = $this->actingAs($user)->post('/expense', [
             'category_id' => '',
             'amount' => '',
             'description' => '',
             'spent_at' => '',
         ]);
 
-        $response->assertInvalid([
+        $testResponse->assertInvalid([
             'category_id' => 'The category field is required.',
             'amount' => 'The amount field is required.',
             'description' => 'The description field is required.',
@@ -82,15 +82,15 @@ class ExpenseTest extends TestCase
         $category = Category::factory()->create();
         $now = now();
 
-        $response = $this->actingAs($user)->post('/expense', [
+        $testResponse = $this->actingAs($user)->post('/expense', [
             'category_id' => $category->id,
             'amount' => 100,
             'description' => 'Test expense',
             'spent_at' => $now,
         ]);
 
-        $response->assertRedirect('/expense');
-        $response->assertSessionHas('status', 'Expense added successfully');
+        $testResponse->assertRedirect('/expense');
+        $testResponse->assertSessionHas('status', 'Expense added successfully');
         $this->assertDatabaseHas('expenses', [
             'user_id' => $user->id,
             'category_id' => $category->id,
@@ -107,10 +107,10 @@ class ExpenseTest extends TestCase
             'user_id' => $user->id,
         ]);
 
-        $response = $this->actingAs($user)->get('/expense/'.$expense->id);
+        $testResponse = $this->actingAs($user)->get('/expense/'.$expense->id);
 
-        $response->assertSuccessful();
-        $response->assertViewHasAll([
+        $testResponse->assertSuccessful();
+        $testResponse->assertViewHasAll([
             'expense',
             'categories',
         ]);
@@ -123,10 +123,10 @@ class ExpenseTest extends TestCase
             'user_id' => $user->id,
         ]);
 
-        $response = $this->actingAs($user)->get(sprintf('/expense/%s/edit', $expense->id));
+        $testResponse = $this->actingAs($user)->get(sprintf('/expense/%s/edit', $expense->id));
 
-        $response->assertSuccessful();
-        $response->assertViewHasAll([
+        $testResponse->assertSuccessful();
+        $testResponse->assertViewHasAll([
             'expense',
             'categories',
         ]);
@@ -139,14 +139,14 @@ class ExpenseTest extends TestCase
             'user_id' => $user->id,
         ]);
 
-        $response = $this->actingAs($user)->put('/expense/'.$expense->id, [
+        $testResponse = $this->actingAs($user)->put('/expense/'.$expense->id, [
             'category_id' => '',
             'amount' => '',
             'description' => '',
             'spent_at' => '',
         ]);
 
-        $response->assertInvalid([
+        $testResponse->assertInvalid([
             'category_id' => 'The category field is required.',
             'amount' => 'The amount field is required.',
             'description' => 'The description field is required.',
@@ -163,15 +163,15 @@ class ExpenseTest extends TestCase
         $category = Category::factory()->create();
         $now = now();
 
-        $response = $this->actingAs($user)->put('/expense/'.$expense->id, [
+        $testResponse = $this->actingAs($user)->put('/expense/'.$expense->id, [
             'category_id' => $category->id,
             'amount' => 100,
             'description' => 'Test expense',
             'spent_at' => $now,
         ]);
 
-        $response->assertRedirect('/expense');
-        $response->assertSessionHas('status', 'Expense updated successfully');
+        $testResponse->assertRedirect('/expense');
+        $testResponse->assertSessionHas('status', 'Expense updated successfully');
         $this->assertDatabaseHas('expenses', [
             'user_id' => $user->id,
             'category_id' => $category->id,
@@ -188,10 +188,10 @@ class ExpenseTest extends TestCase
             'user_id' => $user->id,
         ]);
 
-        $response = $this->actingAs($user)->delete('/expense/'.$expense->id);
+        $testResponse = $this->actingAs($user)->delete('/expense/'.$expense->id);
 
-        $response->assertRedirect('/expense');
-        $response->assertSessionHas('status', 'Expense deleted successfully');
+        $testResponse->assertRedirect('/expense');
+        $testResponse->assertSessionHas('status', 'Expense deleted successfully');
         $this->assertSoftDeleted('expenses', [
             'id' => $expense->id,
         ]);

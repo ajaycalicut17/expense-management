@@ -24,11 +24,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Password::defaults(function () {
-            $rule = Password::min(8);
+            $password = Password::min(8);
 
             return app()->isProduction()
-                ? $rule->mixedCase()->uncompromised()
-                : $rule;
+                ? $password->mixedCase()->uncompromised()
+                : $password;
         });
     }
 }
