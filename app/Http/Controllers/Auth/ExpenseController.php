@@ -17,12 +17,12 @@ use Illuminate\View\View;
 
 class ExpenseController extends Controller
 {
-    public function index(ExpenseService $expenseService, ExpenseData $data): View
+    public function index(ExpenseService $expenseService, ExpenseData $expenseData): View
     {
-        $data->userId = Auth::id();
-        $expenses = $expenseService->paginate($data);
+        $expenseData->userId = Auth::id();
+        $lengthAwarePaginator = $expenseService->paginate($expenseData);
 
-        return view('auth.expense.index', ['expenses' => $expenses]);
+        return view('auth.expense.index', ['expenses' => $lengthAwarePaginator]);
     }
 
     public function create(CategoryService $categoryService): View
@@ -33,13 +33,13 @@ class ExpenseController extends Controller
     }
 
     public function store(
-        StoreExpenseRequest $request,
+        StoreExpenseRequest $storeExpenseRequest,
         ExpenseService $expenseService
     ): RedirectResponse {
-        $data = ExpenseData::createFromRequest($request);
-        $data->userId = $request->user()->id;
+        $expenseData = ExpenseData::createFromRequest($storeExpenseRequest);
+        $expenseData->userId = $storeExpenseRequest->user()->id;
 
-        $expenseService->create($data);
+        $expenseService->create($expenseData);
 
         return to_route('expense.index')->with('status', 'Expense added successfully');
     }
@@ -63,15 +63,15 @@ class ExpenseController extends Controller
     }
 
     public function update(
-        UpdateExpenseRequest $request,
+        UpdateExpenseRequest $updateExpenseRequest,
         Expense $expense,
         ExpenseService $expenseService
     ): RedirectResponse {
-        $data = ExpenseData::createFromRequest($request);
+        $expenseData = ExpenseData::createFromRequest($updateExpenseRequest);
 
-        $expenseService->update($expense, $data);
+        $expenseService->update($expense, $expenseData);
 
-        return to_route('expense.index', ['page' => $request->input('page')])->with('status', 'Expense updated successfully');
+        return to_route('expense.index', ['page' => $updateExpenseRequest->input('page')])->with('status', 'Expense updated successfully');
     }
 
     public function destroy(Expense $expense): RedirectResponse

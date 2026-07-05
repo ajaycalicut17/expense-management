@@ -14,21 +14,21 @@ class RegisterTest extends TestCase
 
     public function test_register_page_loads(): void
     {
-        $response = $this->get('/register');
+        $testResponse = $this->get('/register');
 
-        $response->assertStatus(200);
+        $testResponse->assertStatus(200);
     }
 
     public function test_register_form_validation(): void
     {
-        $response = $this->post('/register', [
+        $testResponse = $this->post('/register', [
             'name' => '',
             'email' => '',
             'password' => '',
             'password_confirmation' => '',
         ]);
 
-        $response->assertInvalid([
+        $testResponse->assertInvalid([
             'name' => 'The name field is required.',
             'email' => 'The email field is required.',
             'password' => 'The password field is required.',
@@ -37,20 +37,20 @@ class RegisterTest extends TestCase
 
     public function test_register_form_validation_with_valid_data(): void
     {
-        $response = $this->post('/register', [
+        $testResponse = $this->post('/register', [
             'name' => 'Test User',
             'email' => 'test@example.com',
             'password' => 'password',
             'password_confirmation' => 'password',
         ]);
 
-        $response->assertValid();
+        $testResponse->assertValid();
         $this->assertDatabaseHas('users', [
             'role' => RoleEnum::USER,
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
-        $response->assertRedirectToRoute('index');
-        $response->assertSessionHas('status', 'User registered successfully');
+        $testResponse->assertRedirectToRoute('index');
+        $testResponse->assertSessionHas('status', 'User registered successfully');
     }
 }
