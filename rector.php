@@ -27,7 +27,7 @@ return RectorConfig::configure()
         earlyReturn: true,
         strictBooleans: true,
         carbon: true,
-        // rectorPreset: true,
+        rectorPreset: true,
         phpunitCodeQuality: true,
         doctrineCodeQuality: true,
         symfonyCodeQuality: true,

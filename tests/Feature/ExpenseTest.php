@@ -88,7 +88,7 @@ final class ExpenseTest extends TestCase
             'category_id' => $category->id,
             'amount' => 100,
             'description' => 'Test expense',
-            'spent_at' => $now,
+            'spent_at' => $now->toString(),
         ]);
 
         $testResponse->assertRedirect('/expense');
@@ -169,7 +169,7 @@ final class ExpenseTest extends TestCase
             'category_id' => $category->id,
             'amount' => 100,
             'description' => 'Test expense',
-            'spent_at' => $now,
+            'spent_at' => $now->toString(),
         ]);
 
         $testResponse->assertRedirect('/expense');
