@@ -13,12 +13,14 @@ test('redirects unauthenticated user to login', function (): void {
 
     $testResponse->assertRedirect('/');
 });
+
 test('authenticated user can access expense page', function (): void {
     $user = User::factory()->create();
     $testResponse = $this->actingAs($user)->get('/expense');
 
     $testResponse->assertSuccessful();
 });
+
 test('index page shows paginated expenses', function (): void {
     $user = User::factory()->create();
     $testResponse = $this->actingAs($user)->get('/expense');
@@ -37,6 +39,7 @@ test('index page shows paginated expenses', function (): void {
         'Action',
     ]);
 });
+
 test('create page shows expense create form', function (): void {
     $user = User::factory()->create();
     $testResponse = $this->actingAs($user)->get('/expense/create');
@@ -46,6 +49,7 @@ test('create page shows expense create form', function (): void {
         'categories',
     ]);
 });
+
 test('store validation fails with invalid data', function (): void {
     $user = User::factory()->create();
     $testResponse = $this->actingAs($user)->post('/expense', [
@@ -62,6 +66,7 @@ test('store validation fails with invalid data', function (): void {
         'spent_at' => 'The spent at field is required.',
     ]);
 });
+
 test('store creates new expense', function (): void {
     $user = User::factory()->create();
     $category = Category::factory()->create();
@@ -84,6 +89,7 @@ test('store creates new expense', function (): void {
         'spent_at' => $now->format('Y-m-d H:i:s'),
     ]);
 });
+
 test('show page shows expense details', function (): void {
     $user = User::factory()->create();
     $expense = Expense::factory()->create([
@@ -98,6 +104,7 @@ test('show page shows expense details', function (): void {
         'categories',
     ]);
 });
+
 test('edit page shows expense edit form', function (): void {
     $user = User::factory()->create();
     $expense = Expense::factory()->create([
@@ -112,6 +119,7 @@ test('edit page shows expense edit form', function (): void {
         'categories',
     ]);
 });
+
 test('update form validation', function (): void {
     $user = User::factory()->create();
     $expense = Expense::factory()->create([
@@ -132,6 +140,7 @@ test('update form validation', function (): void {
         'spent_at' => 'The spent at field is required.',
     ]);
 });
+
 test('update expense', function (): void {
     $user = User::factory()->create();
     $expense = Expense::factory()->create([
@@ -157,6 +166,7 @@ test('update expense', function (): void {
         'spent_at' => $now->format('Y-m-d H:i:s'),
     ]);
 });
+
 test('delete expense', function (): void {
     $user = User::factory()->create();
     $expense = Expense::factory()->create([

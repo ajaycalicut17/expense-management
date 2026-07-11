@@ -16,6 +16,7 @@ test('dashboard returns 200', function (): void {
 
     $testResponse->assertStatus(200);
 });
+
 test('average daily expense response', function (): void {
     $now = now();
     $user = User::factory()->create();
@@ -27,6 +28,7 @@ test('average daily expense response', function (): void {
         ],
     ]);
 });
+
 test('average daily expense calculation', function (): void {
     $user = User::factory()->create();
     $now = now();
@@ -43,6 +45,7 @@ test('average daily expense calculation', function (): void {
         ],
     ]);
 });
+
 test('total expenses by category response', function (): void {
     $now = now();
     $user = User::factory()->create();
@@ -53,6 +56,7 @@ test('total expenses by category response', function (): void {
         'data',
     ]);
 });
+
 test('total expenses by category calculation', function (): void {
     $now = now();
     $user = User::factory()->create([
@@ -76,6 +80,7 @@ test('total expenses by category calculation', function (): void {
         ],
     ]);
 });
+
 test('total expenses by category with respect to user', function (): void {
     $now = now();
     $category = Category::factory()->create();
@@ -120,6 +125,7 @@ test('total expenses by category with respect to user', function (): void {
         ],
     ]);
 });
+
 test('total expenses by category with respect to user role', function (): void {
     $now = now();
     $category = Category::factory()->create();
@@ -164,6 +170,7 @@ test('total expenses by category with respect to user role', function (): void {
         ],
     ]);
 });
+
 test('only admin can see all users', function (): void {
     $admin = User::factory()->create([
         'role' => RoleEnum::ADMIN,

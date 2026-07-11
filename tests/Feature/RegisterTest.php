@@ -11,6 +11,7 @@ test('register page loads', function (): void {
 
     $testResponse->assertStatus(200);
 });
+
 test('register form validation', function (): void {
     $testResponse = $this->post('/register', [
         'name' => '',
@@ -25,6 +26,7 @@ test('register form validation', function (): void {
         'password' => 'The password field is required.',
     ]);
 });
+
 test('register form validation with valid data', function (): void {
     $testResponse = $this->post('/register', [
         'name' => 'Test User',

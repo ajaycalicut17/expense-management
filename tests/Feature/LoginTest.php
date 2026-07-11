@@ -11,6 +11,7 @@ test('login page loads', function (): void {
 
     $testResponse->assertSuccessful();
 });
+
 test('login form validation', function (): void {
     $testResponse = $this->post('/login', [
         'email' => '',
@@ -22,6 +23,7 @@ test('login form validation', function (): void {
         'password',
     ]);
 });
+
 test('login form validation with invalid email and password', function (): void {
     $testResponse = $this->post('/login', [
         'email' => 'invalid-email@example.com',
@@ -32,6 +34,7 @@ test('login form validation with invalid email and password', function (): void 
         'email' => 'The provided credentials do not match our records.',
     ]);
 });
+
 test('login form with valid data', function (): void {
     $user = User::factory()->create();
 
@@ -42,11 +45,13 @@ test('login form with valid data', function (): void {
 
     $testResponse->assertRedirect('/dashboard');
 });
+
 test('unauthenticated user cannot access dashboard', function (): void {
     $testResponse = $this->get('/dashboard');
 
     $testResponse->assertRedirect('/');
 });
+
 test('guest middleware redirects authenticated user', function (): void {
     $user = User::factory()->create();
     $this->actingAs($user);
@@ -59,6 +64,7 @@ test('guest middleware redirects authenticated user', function (): void {
 
     $response->assertRedirect('/dashboard');
 });
+
 test('logout', function (): void {
     $user = User::factory()->create();
     $this->actingAs($user);
