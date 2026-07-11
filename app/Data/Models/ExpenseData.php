@@ -24,8 +24,8 @@ class ExpenseData
         return new self(
             id: $request->input('id'),
             userId: Gate::allows('viewAny', User::class) ? $request->input('user_id') : $request->user()->id,
-            categoryId: $request->input('category_id'),
-            amount: $request->input('amount'),
+            categoryId: $request->integer('category_id'),
+            amount: $request->float('amount'),
             description: $request->input('description'),
             spentAt: $request->input('spent_at'),
         );
