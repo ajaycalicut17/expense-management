@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 use App\Enums\RoleEnum;
-uses(\Illuminate\Foundation\Testing\LazilyRefreshDatabase::class);
+use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
+
+uses(LazilyRefreshDatabase::class);
 
 test('register page loads', function (): void {
     $testResponse = $this->get('/register');

@@ -4,7 +4,9 @@ declare(strict_types=1);
 use App\Models\Category;
 use App\Models\Expense;
 use App\Models\User;
-uses(\Illuminate\Foundation\Testing\LazilyRefreshDatabase::class);
+use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
+
+uses(LazilyRefreshDatabase::class);
 
 test('redirects unauthenticated user to login', function (): void {
     $testResponse = $this->get('/expense');

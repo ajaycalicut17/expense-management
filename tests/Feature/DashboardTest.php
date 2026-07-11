@@ -5,8 +5,10 @@ use App\Enums\RoleEnum;
 use App\Models\Category;
 use App\Models\Expense;
 use App\Models\User;
+use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Support\Number;
-uses(\Illuminate\Foundation\Testing\LazilyRefreshDatabase::class);
+
+uses(LazilyRefreshDatabase::class);
 
 test('dashboard returns 200', function (): void {
     $user = User::factory()->create();
