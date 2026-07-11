@@ -22,8 +22,8 @@ class ExpenseData
     public static function createFromRequest(Request $request): self
     {
         return new self(
-            id: $request->input('id'),
-            userId: Gate::allows('viewAny', User::class) ? $request->input('user_id') : $request->user()->id,
+            id: $request->integer('id'),
+            userId: Gate::allows('viewAny', User::class) ? $request->integer('user_id') : $request->user()->id,
             categoryId: $request->integer('category_id'),
             amount: $request->float('amount'),
             description: $request->input('description'),
