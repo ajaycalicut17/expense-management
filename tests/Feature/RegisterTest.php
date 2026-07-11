@@ -4,12 +4,12 @@ declare(strict_types=1);
 use App\Enums\RoleEnum;
 uses(\Illuminate\Foundation\Testing\LazilyRefreshDatabase::class);
 
-test('register page loads', function () {
+test('register page loads', function (): void {
     $testResponse = $this->get('/register');
 
     $testResponse->assertStatus(200);
 });
-test('register form validation', function () {
+test('register form validation', function (): void {
     $testResponse = $this->post('/register', [
         'name' => '',
         'email' => '',
@@ -23,7 +23,7 @@ test('register form validation', function () {
         'password' => 'The password field is required.',
     ]);
 });
-test('register form validation with valid data', function () {
+test('register form validation with valid data', function (): void {
     $testResponse = $this->post('/register', [
         'name' => 'Test User',
         'email' => 'test@example.com',

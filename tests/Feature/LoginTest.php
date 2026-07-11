@@ -4,12 +4,12 @@ declare(strict_types=1);
 use App\Models\User;
 uses(\Illuminate\Foundation\Testing\LazilyRefreshDatabase::class);
 
-test('login page loads', function () {
+test('login page loads', function (): void {
     $testResponse = $this->get('/');
 
     $testResponse->assertSuccessful();
 });
-test('login form validation', function () {
+test('login form validation', function (): void {
     $testResponse = $this->post('/login', [
         'email' => '',
         'password' => '',
@@ -20,7 +20,7 @@ test('login form validation', function () {
         'password',
     ]);
 });
-test('login form validation with invalid email and password', function () {
+test('login form validation with invalid email and password', function (): void {
     $testResponse = $this->post('/login', [
         'email' => 'invalid-email@example.com',
         'password' => 'invalid-password',
@@ -30,7 +30,7 @@ test('login form validation with invalid email and password', function () {
         'email' => 'The provided credentials do not match our records.',
     ]);
 });
-test('login form with valid data', function () {
+test('login form with valid data', function (): void {
     $user = User::factory()->create();
 
     $testResponse = $this->post('/login', [
@@ -40,12 +40,12 @@ test('login form with valid data', function () {
 
     $testResponse->assertRedirect('/dashboard');
 });
-test('unauthenticated user cannot access dashboard', function () {
+test('unauthenticated user cannot access dashboard', function (): void {
     $testResponse = $this->get('/dashboard');
 
     $testResponse->assertRedirect('/');
 });
-test('guest middleware redirects authenticated user', function () {
+test('guest middleware redirects authenticated user', function (): void {
     $user = User::factory()->create();
     $this->actingAs($user);
 
@@ -57,7 +57,7 @@ test('guest middleware redirects authenticated user', function () {
 
     $response->assertRedirect('/dashboard');
 });
-test('logout', function () {
+test('logout', function (): void {
     $user = User::factory()->create();
     $this->actingAs($user);
 

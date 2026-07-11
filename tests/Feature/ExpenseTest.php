@@ -6,18 +6,18 @@ use App\Models\Expense;
 use App\Models\User;
 uses(\Illuminate\Foundation\Testing\LazilyRefreshDatabase::class);
 
-test('redirects unauthenticated user to login', function () {
+test('redirects unauthenticated user to login', function (): void {
     $testResponse = $this->get('/expense');
 
     $testResponse->assertRedirect('/');
 });
-test('authenticated user can access expense page', function () {
+test('authenticated user can access expense page', function (): void {
     $user = User::factory()->create();
     $testResponse = $this->actingAs($user)->get('/expense');
 
     $testResponse->assertSuccessful();
 });
-test('index page shows paginated expenses', function () {
+test('index page shows paginated expenses', function (): void {
     $user = User::factory()->create();
     $testResponse = $this->actingAs($user)->get('/expense');
 
@@ -35,7 +35,7 @@ test('index page shows paginated expenses', function () {
         'Action',
     ]);
 });
-test('create page shows expense create form', function () {
+test('create page shows expense create form', function (): void {
     $user = User::factory()->create();
     $testResponse = $this->actingAs($user)->get('/expense/create');
 
@@ -44,7 +44,7 @@ test('create page shows expense create form', function () {
         'categories',
     ]);
 });
-test('store validation fails with invalid data', function () {
+test('store validation fails with invalid data', function (): void {
     $user = User::factory()->create();
     $testResponse = $this->actingAs($user)->post('/expense', [
         'category_id' => '',
@@ -60,7 +60,7 @@ test('store validation fails with invalid data', function () {
         'spent_at' => 'The spent at field is required.',
     ]);
 });
-test('store creates new expense', function () {
+test('store creates new expense', function (): void {
     $user = User::factory()->create();
     $category = Category::factory()->create();
     $now = now();
@@ -82,7 +82,7 @@ test('store creates new expense', function () {
         'spent_at' => $now->format('Y-m-d H:i:s'),
     ]);
 });
-test('show page shows expense details', function () {
+test('show page shows expense details', function (): void {
     $user = User::factory()->create();
     $expense = Expense::factory()->create([
         'user_id' => $user->id,
@@ -96,7 +96,7 @@ test('show page shows expense details', function () {
         'categories',
     ]);
 });
-test('edit page shows expense edit form', function () {
+test('edit page shows expense edit form', function (): void {
     $user = User::factory()->create();
     $expense = Expense::factory()->create([
         'user_id' => $user->id,
@@ -110,7 +110,7 @@ test('edit page shows expense edit form', function () {
         'categories',
     ]);
 });
-test('update form validation', function () {
+test('update form validation', function (): void {
     $user = User::factory()->create();
     $expense = Expense::factory()->create([
         'user_id' => $user->id,
@@ -130,7 +130,7 @@ test('update form validation', function () {
         'spent_at' => 'The spent at field is required.',
     ]);
 });
-test('update expense', function () {
+test('update expense', function (): void {
     $user = User::factory()->create();
     $expense = Expense::factory()->create([
         'user_id' => $user->id,
@@ -155,7 +155,7 @@ test('update expense', function () {
         'spent_at' => $now->format('Y-m-d H:i:s'),
     ]);
 });
-test('delete expense', function () {
+test('delete expense', function (): void {
     $user = User::factory()->create();
     $expense = Expense::factory()->create([
         'user_id' => $user->id,

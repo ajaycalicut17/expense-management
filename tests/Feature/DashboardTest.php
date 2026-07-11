@@ -8,13 +8,13 @@ use App\Models\User;
 use Illuminate\Support\Number;
 uses(\Illuminate\Foundation\Testing\LazilyRefreshDatabase::class);
 
-test('dashboard returns 200', function () {
+test('dashboard returns 200', function (): void {
     $user = User::factory()->create();
     $testResponse = $this->actingAs($user)->get('/dashboard');
 
     $testResponse->assertStatus(200);
 });
-test('average daily expense response', function () {
+test('average daily expense response', function (): void {
     $now = now();
     $user = User::factory()->create();
     $testResponse = $this->actingAs($user)->get('/average-daily-expense?month='.$now->month.'&year='.$now->year);
@@ -25,7 +25,7 @@ test('average daily expense response', function () {
         ],
     ]);
 });
-test('average daily expense calculation', function () {
+test('average daily expense calculation', function (): void {
     $user = User::factory()->create();
     $now = now();
     Expense::factory()->count(10)->create([
@@ -41,7 +41,7 @@ test('average daily expense calculation', function () {
         ],
     ]);
 });
-test('total expenses by category response', function () {
+test('total expenses by category response', function (): void {
     $now = now();
     $user = User::factory()->create();
     $testResponse = $this->actingAs($user)->get('/total-expenses-by-category?month='.$now->month.'&year='.$now->year);
@@ -51,7 +51,7 @@ test('total expenses by category response', function () {
         'data',
     ]);
 });
-test('total expenses by category calculation', function () {
+test('total expenses by category calculation', function (): void {
     $now = now();
     $user = User::factory()->create([
         'role' => RoleEnum::USER,
@@ -74,7 +74,7 @@ test('total expenses by category calculation', function () {
         ],
     ]);
 });
-test('total expenses by category with respect to user', function () {
+test('total expenses by category with respect to user', function (): void {
     $now = now();
     $category = Category::factory()->create();
 
@@ -118,7 +118,7 @@ test('total expenses by category with respect to user', function () {
         ],
     ]);
 });
-test('total expenses by category with respect to user role', function () {
+test('total expenses by category with respect to user role', function (): void {
     $now = now();
     $category = Category::factory()->create();
 
@@ -162,7 +162,7 @@ test('total expenses by category with respect to user role', function () {
         ],
     ]);
 });
-test('only admin can see all users', function () {
+test('only admin can see all users', function (): void {
     $admin = User::factory()->create([
         'role' => RoleEnum::ADMIN,
     ]);
