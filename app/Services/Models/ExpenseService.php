@@ -57,7 +57,7 @@ class ExpenseService
         ExpenseData $expenseData,
         DateData $dateData
     ): ?float {
-        return Expense::query()
+        return (float) Expense::query()
             ->where('user_id', $expenseData->userId)
             ->whereMonth('spent_at', $dateData->month)
             ->whereYear('spent_at', $dateData->year)

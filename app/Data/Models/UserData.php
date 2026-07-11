@@ -23,7 +23,7 @@ class UserData
     public static function createFromRequest(Request $request): self
     {
         return new self(
-            id: $request->input('id'),
+            id: $request->integer('id'),
             name: $request->input('name'),
             email: $request->input('email'),
             password: $request->input('password'),
