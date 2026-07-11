@@ -1,4 +1,4 @@
-# Expense Management Test
+# Expense Management
 
 ## Requirement
 #### PHP Version: 8.5.5
