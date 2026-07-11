@@ -1,93 +1,71 @@
 <?php
 
 declare(strict_types=1);
-
-namespace Tests\Feature;
-
 use App\Models\User;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
-use Tests\TestCase;
+uses(\Illuminate\Foundation\Testing\LazilyRefreshDatabase::class);
 
-final class LoginTest extends TestCase
-{
-    use LazilyRefreshDatabase;
+test('login page loads', function () {
+    $testResponse = $this->get('/');
 
-    public function test_login_page_loads(): void
-    {
-        $testResponse = $this->get('/');
+    $testResponse->assertSuccessful();
+});
+test('login form validation', function () {
+    $testResponse = $this->post('/login', [
+        'email' => '',
+        'password' => '',
+    ]);
 
-        $testResponse->assertSuccessful();
-    }
+    $testResponse->assertInvalid([
+        'email',
+        'password',
+    ]);
+});
+test('login form validation with invalid email and password', function () {
+    $testResponse = $this->post('/login', [
+        'email' => 'invalid-email@example.com',
+        'password' => 'invalid-password',
+    ]);
 
-    public function test_login_form_validation(): void
-    {
-        $testResponse = $this->post('/login', [
-            'email' => '',
-            'password' => '',
-        ]);
+    $testResponse->assertInvalid([
+        'email' => 'The provided credentials do not match our records.',
+    ]);
+});
+test('login form with valid data', function () {
+    $user = User::factory()->create();
 
-        $testResponse->assertInvalid([
-            'email',
-            'password',
-        ]);
-    }
+    $testResponse = $this->post('/login', [
+        'email' => $user->email,
+        'password' => 'password',
+    ]);
 
-    public function test_login_form_validation_with_invalid_email_and_password(): void
-    {
-        $testResponse = $this->post('/login', [
-            'email' => 'invalid-email@example.com',
-            'password' => 'invalid-password',
-        ]);
+    $testResponse->assertRedirect('/dashboard');
+});
+test('unauthenticated user cannot access dashboard', function () {
+    $testResponse = $this->get('/dashboard');
 
-        $testResponse->assertInvalid([
-            'email' => 'The provided credentials do not match our records.',
-        ]);
-    }
+    $testResponse->assertRedirect('/');
+});
+test('guest middleware redirects authenticated user', function () {
+    $user = User::factory()->create();
+    $this->actingAs($user);
 
-    public function test_login_form_with_valid_data(): void
-    {
-        $user = User::factory()->create();
+    $response = $this->get('/');
 
-        $testResponse = $this->post('/login', [
-            'email' => $user->email,
-            'password' => 'password',
-        ]);
+    $response->assertRedirect('/dashboard');
 
-        $testResponse->assertRedirect('/dashboard');
-    }
+    $response = $this->get('/register');
 
-    public function test_unauthenticated_user_cannot_access_dashboard(): void
-    {
-        $testResponse = $this->get('/dashboard');
+    $response->assertRedirect('/dashboard');
+});
+test('logout', function () {
+    $user = User::factory()->create();
+    $this->actingAs($user);
 
-        $testResponse->assertRedirect('/');
-    }
+    $response = $this->post('/logout');
 
-    public function test_guest_middleware_redirects_authenticated_user(): void
-    {
-        $user = User::factory()->create();
-        $this->actingAs($user);
+    $response->assertRedirect('/');
 
-        $response = $this->get('/');
+    $response = $this->get('/dashboard');
 
-        $response->assertRedirect('/dashboard');
-
-        $response = $this->get('/register');
-
-        $response->assertRedirect('/dashboard');
-    }
-
-    public function test_logout(): void
-    {
-        $user = User::factory()->create();
-        $this->actingAs($user);
-
-        $response = $this->post('/logout');
-
-        $response->assertRedirect('/');
-
-        $response = $this->get('/dashboard');
-
-        $response->assertRedirect('/');
-    }
-}
+    $response->assertRedirect('/');
+});

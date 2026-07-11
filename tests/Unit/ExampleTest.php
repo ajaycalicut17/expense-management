@@ -2,17 +2,6 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit;
-
-use PHPUnit\Framework\TestCase;
-
-final class ExampleTest extends TestCase
-{
-    /**
-     * A basic unit test example.
-     */
-    public function test_example(): void
-    {
-        $this->assertTrue(condition: true);
-    }
-}
+test('example', function () {
+    expect(value: true)->toBeTrue();
+});
