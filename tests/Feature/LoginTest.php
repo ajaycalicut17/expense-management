@@ -77,3 +77,16 @@ test('logout', function (): void {
 
     $response->assertRedirect('/');
 });
+
+it('may login the user', function () {
+    $user = User::factory()->create();
+ 
+    $page = visit('/');
+ 
+    $page->fill('email', $user->email)
+         ->fill('password', 'password')
+         ->click('Log in')
+         ->assertSee('Dashboard');
+ 
+    $this->assertAuthenticated();
+});
