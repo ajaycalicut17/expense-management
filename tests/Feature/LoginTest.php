@@ -86,7 +86,7 @@ it('may login the user', function (): void {
     $pendingAwaitablePage->fill('email', $user->email)
         ->fill('password', 'password')
         ->click('Log in')
-        ->assertSee('Dashboard');
+        ->assertSee('Dashboard 1');
 
     $this->assertAuthenticated();
 });
