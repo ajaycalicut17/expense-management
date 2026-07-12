@@ -52,8 +52,8 @@ class DashboardController extends Controller
         $dateData = DateData::createFromRequest($totalExpensesByCategoryRequest);
         $expenseData = ExpenseData::createFromRequest($totalExpensesByCategoryRequest);
 
-        $totalExpenseByCategory = $expenseService->totalExpensesByCategory($expenseData, $dateData);
+        $collection = $expenseService->totalExpensesByCategory($expenseData, $dateData);
 
-        return TotalExpensesByCategoryResource::make($totalExpenseByCategory);
+        return TotalExpensesByCategoryResource::make($collection);
     }
 }
