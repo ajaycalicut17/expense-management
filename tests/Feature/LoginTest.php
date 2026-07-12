@@ -80,13 +80,13 @@ test('logout', function (): void {
 
 it('may login the user', function (): void {
     $user = User::factory()->create();
- 
+
     $pendingAwaitablePage = visit('/');
- 
+
     $pendingAwaitablePage->fill('email', $user->email)
-         ->fill('password', 'password')
-         ->click('Log in')
-         ->assertSee('Dashboard');
- 
+        ->fill('password', 'password')
+        ->click('Log in')
+        ->assertSee('Dashboard');
+
     $this->assertAuthenticated();
 });
