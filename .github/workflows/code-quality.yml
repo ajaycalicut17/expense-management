@@ -22,9 +22,7 @@ jobs:
         with:
           php-version: ${{ env.PHP_VERSION }}
           coverage: none
-
-      - name: Install dependencies
-        uses: "ramsey/composer-install@v3"
+          tools: composer:v3
 
       - name: Run Rector
         run: vendor/bin/rector --ansi
@@ -88,6 +86,8 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ env.PHP_VERSION }}
+          tools: composer:v3
+          coverage: xdebug
 
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
