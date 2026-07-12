@@ -21,13 +21,10 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ env.PHP_VERSION }}
-          coverage: none
-
-      - name: Install dependencies
-        uses: "ramsey/composer-install@v3"
+          coverage: rector
 
       - name: Run Rector
-        run: vendor/bin/rector --ansi
+        run: rector --ansi
  
       - name: Commit files
         uses: stefanzweifel/git-auto-commit-action@v7
