@@ -91,3 +91,15 @@ it('may login the user', function (): void {
 
     $this->assertAuthenticated();
 });
+
+it('may logout the user', function (): void {
+    $user = User::factory()->create();
+    $this->actingAs($user);
+
+    $pendingAwaitablePage = visit('/dashboard');
+
+    $pendingAwaitablePage->click($user->name)
+        ->click('Log Out')
+        ->assertSee('Log in');
+});
+
