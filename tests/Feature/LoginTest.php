@@ -102,4 +102,3 @@ it('may logout the user', function (): void {
         ->click('Log Out')
         ->assertSee('Log in');
 });
-
