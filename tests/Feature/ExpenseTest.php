@@ -203,7 +203,7 @@ it('may update the expense', function (): void {
     Expense::factory()
         ->recycle($user)
         ->create();
-    
+
     $this->actingAs($user);
 
     $visit = visit('/expense');
@@ -211,4 +211,3 @@ it('may update the expense', function (): void {
         ->click('Save')
         ->assertSee('Expense updated successfully');
 });
-
