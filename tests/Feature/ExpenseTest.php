@@ -185,7 +185,7 @@ test('delete expense', function (): void {
 it('may create the expense', function (): void {
     $user = User::factory()->create();
     $category = Category::factory()->create();
-    
+
     $this->actingAs($user);
 
     $visit = visit('/expense');
