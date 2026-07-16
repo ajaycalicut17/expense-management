@@ -217,7 +217,7 @@ it('may delete the expense', function (): void {
     Expense::factory()
         ->recycle($user)
         ->create();
-    
+
     $this->actingAs($user);
 
     $visit = visit('/expense');
