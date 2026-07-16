@@ -211,3 +211,16 @@ it('may update the expense', function (): void {
         ->click('Save')
         ->assertSee('Expense updated successfully');
 });
+
+it('may delete the expense', function (): void {
+    $user = User::factory()->create();
+    Expense::factory()
+        ->recycle($user)
+        ->create();
+    
+    $this->actingAs($user);
+
+    $visit = visit('/expense');
+    $visit->click('Delete')
+        ->assertSee('Expense deleted successfully');
+});
