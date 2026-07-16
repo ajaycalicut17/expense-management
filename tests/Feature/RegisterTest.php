@@ -44,3 +44,17 @@ test('register form validation with valid data', function (): void {
     $testResponse->assertRedirectToRoute('index');
     $testResponse->assertSessionHas('status', 'User registered successfully');
 });
+
+it('may register the user', function (): void {
+    $pendingAwaitablePage = visit('/');
+
+    $pendingAwaitablePage->click('Register')
+        ->assertSee('Register')
+        ->fill('name', 'Test Test')
+        ->fill('email', 'test@gmail.com')
+        ->fill('password', 'password')
+        ->fill('password_confirmation', 'password')
+        ->click('Register')
+        ->assertSee('User registered successfully')
+        ->assertSee('Log in');
+});
