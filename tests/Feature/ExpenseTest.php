@@ -198,3 +198,17 @@ it('may create the expense', function (): void {
         ->assertSee('Expense added successfully');
 });
 
+it('may update the expense', function (): void {
+    $user = User::factory()->create();
+    Expense::factory()
+        ->recycle($user)
+        ->create();
+    
+    $this->actingAs($user);
+
+    $visit = visit('/expense');
+    $visit->click('Edit')
+        ->click('Save')
+        ->assertSee('Expense updated successfully');
+});
+
