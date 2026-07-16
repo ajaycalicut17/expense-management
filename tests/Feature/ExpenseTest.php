@@ -181,3 +181,20 @@ test('delete expense', function (): void {
         'id' => $expense->id,
     ]);
 });
+
+it('may create the expense', function (): void {
+    $user = User::factory()->create();
+    $category = Category::factory()->create();
+    
+    $this->actingAs($user);
+
+    $visit = visit('/expense');
+    $visit->click('Add')
+        ->select('category_id', $category->id)
+        ->fill('amount', '100')
+        ->fill('description', 'Test description')
+        ->fill('spent_at', '2026-07-16T14:30')
+        ->click('Save')
+        ->assertSee('Expense added successfully');
+});
+
