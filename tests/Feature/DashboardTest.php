@@ -184,3 +184,19 @@ test('only admin can see all users', function (): void {
     $response = $this->actingAs($user)->get('/dashboard');
     $response->assertViewMissing('users');
 });
+
+it('may calculate average daily expenses', function (): void {
+    $user = User::factory()->create();
+    $now = now();
+    Expense::factory()->count(10)->create([
+        'user_id' => $user->id,
+        'amount' => 100,
+        'spent_at' => $now,
+    ]);
+    $this->actingAs($user);
+
+    $visit = visit('/dashboard');
+    $visit->select('#monthSelector', $now->month)
+        ->select('#yearSelector', $now->year)
+        ->assertSee(Number::currency(100) . ' ' . 'per day');
+});
