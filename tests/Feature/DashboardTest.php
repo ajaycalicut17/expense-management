@@ -198,7 +198,7 @@ it('may calculate average daily expenses', function (): void {
     $visit = visit('/dashboard');
     $visit->select('#monthSelector', $now->month)
         ->select('#yearSelector', $now->year)
-        ->assertSee(Number::currency(100) . ' ' . 'per day');
+        ->assertSee(Number::currency(100).' '.'per day');
 });
 
 it('may calculate total expenses per category', function (): void {
