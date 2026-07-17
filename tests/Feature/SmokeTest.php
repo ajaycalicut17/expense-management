@@ -8,7 +8,7 @@ it('may smoke test for guest routes', function (): void {
         '/',
         '/register',
     ]);
- 
+
     $arrayablePendingAwaitablePage->assertNoSmoke();
 });
 
@@ -24,8 +24,8 @@ it('may smoke test for authenticated routes', function (): void {
         '/dashboard',
         '/expense',
         '/expense/create',
-        '/expense/' . $expense->id . '/edit?page=1',
+        '/expense/'.$expense->id.'/edit?page=1',
     ]);
- 
+
     $arrayablePendingAwaitablePage->assertNoSmoke();
 });
