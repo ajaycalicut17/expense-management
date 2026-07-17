@@ -200,3 +200,24 @@ it('may calculate average daily expenses', function (): void {
         ->select('#yearSelector', $now->year)
         ->assertSee(Number::currency(100) . ' ' . 'per day');
 });
+
+it('may calculate total expenses per category', function (): void {
+    $now = now();
+    $user = User::factory()->create([
+        'role' => RoleEnum::ADMIN,
+    ]);
+    $category = Category::factory()->create();
+    Expense::factory()->count(10)->create([
+        'user_id' => $user->id,
+        'category_id' => $category->id,
+        'amount' => 100,
+        'spent_at' => $now,
+    ]);
+    $this->actingAs($user);
+
+    $visit = visit('/dashboard');
+    $visit->select('#userSelector', $user->id)
+        ->select('#categoryMonthSelector', $now->month)
+        ->select('#categoryYearSelector', $now->year)
+        ->assertNoSmoke();
+});
