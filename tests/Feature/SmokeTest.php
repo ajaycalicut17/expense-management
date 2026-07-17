@@ -3,16 +3,16 @@
 use App\Models\Expense;
 use App\Models\User;
 
-it('may smoke test for guest routes', function () {
-    $pages = visit([
+it('may smoke test for guest routes', function (): void {
+    $arrayablePendingAwaitablePage = visit([
         '/',
         '/register',
     ]);
  
-    $pages->assertNoSmoke();
+    $arrayablePendingAwaitablePage->assertNoSmoke();
 });
 
-it('may smoke test for authenticated routes', function () {
+it('may smoke test for authenticated routes', function (): void {
     $user = User::factory()->create();
     $this->actingAs($user);
 
@@ -20,12 +20,12 @@ it('may smoke test for authenticated routes', function () {
         'user_id' => $user->id,
     ]);
 
-    $pages = visit([
+    $arrayablePendingAwaitablePage = visit([
         '/dashboard',
         '/expense',
         '/expense/create',
         '/expense/' . $expense->id . '/edit?page=1',
     ]);
  
-    $pages->assertNoSmoke();
+    $arrayablePendingAwaitablePage->assertNoSmoke();
 });
