@@ -20,8 +20,10 @@ class Expense extends Model
 {
     use BelongsToCategory;
     use BelongsToUser;
+
     /** @use HasFactory<ExpenseFactory> */
     use HasFactory;
+
     use SoftDeletes;
 
     #[\Override]
