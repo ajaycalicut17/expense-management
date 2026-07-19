@@ -39,7 +39,7 @@ class ExpenseController extends Controller
         ExpenseService $expenseService
     ): RedirectResponse {
         $expenseData = ExpenseData::createFromRequest($storeExpenseRequest);
-        $expenseData->userId = $storeExpenseRequest->user()->id;
+        $expenseData->userId = $storeExpenseRequest->user()?->id;
 
         $expenseService->create($expenseData);
 

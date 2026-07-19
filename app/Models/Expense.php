@@ -12,11 +12,13 @@ use Illuminate\Database\Eloquent\Casts\AsStringable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 
 /**
- * @property int $user_id
- * @property int $category_id
- * @property float $amount
+ * @property ?int $user_id
+ * @property ?int $category_id
+ * @property ?float $amount
+ * @property ?Carbon $spent_at
  */
 class Expense extends Model
 {

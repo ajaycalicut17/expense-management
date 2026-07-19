@@ -35,7 +35,7 @@ class DashboardController extends Controller
     ): AverageDailyExpenseResource {
         $dateData = DateData::createFromRequest($averageDailyExpenseRequest);
         $expenseData = new ExpenseData(
-            userId: $averageDailyExpenseRequest->user()->id,
+            userId: $averageDailyExpenseRequest->user()?->id,
         );
         $averageDailyExpense = $expenseService->averageDailyExpense(
             $expenseData,

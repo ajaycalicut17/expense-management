@@ -16,7 +16,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 /**
- * @property RoleEnum $role
+ * @property ?string $name
+ * @property ?string $email
+ * @property ?string $password
+ * @property ?RoleEnum $role
  * @property bool $isAdmin
  * @property bool $isUser
  */
