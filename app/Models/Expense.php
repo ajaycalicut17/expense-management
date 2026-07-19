@@ -12,6 +12,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @property float $amount
+ */
 class Expense extends Model
 {
     use BelongsToCategory;
