@@ -12,6 +12,9 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class ExpenseService
 {
+    /**
+     * @return LengthAwarePaginator<int, Expense>
+     */
     public function paginate(ExpenseData $expenseData): LengthAwarePaginator
     {
         return Expense::query()
@@ -64,6 +67,9 @@ class ExpenseService
             ->avg('amount');
     }
 
+    /**
+     * @return Collection<int, Expense>
+     */
     public function totalExpensesByCategory(
         ExpenseData $expenseData,
         DateData $dateData

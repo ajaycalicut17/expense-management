@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Collection;
 
 class CategoryService
 {
+    /**
+     * @return Collection<int, Category>
+     */
     public function all(): Collection
     {
         return Category::query()
