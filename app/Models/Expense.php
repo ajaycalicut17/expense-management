@@ -14,6 +14,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
+ * @property int $user_id
+ * @property int $category_id
  * @property float $amount
  */
 class Expense extends Model

@@ -21,7 +21,7 @@ class ExpenseController extends Controller
 {
     public function index(ExpenseService $expenseService, ExpenseData $expenseData): View
     {
-        $expenseData->userId = Auth::id();
+        $expenseData->userId = (int) Auth::id();
         $lengthAwarePaginator = $expenseService->paginate($expenseData);
 
         return view('auth.expense.index', ['expenses' => $lengthAwarePaginator]);
