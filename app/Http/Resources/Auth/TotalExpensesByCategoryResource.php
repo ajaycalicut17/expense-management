@@ -18,7 +18,7 @@ class TotalExpensesByCategoryResource extends JsonResource
     #[\Override]
     public function toArray(Request $request): array
     {
-        /** @var Collection<int, array{name: string, total: mixed}> $resource */
+        /** @var Collection<int, array{name: string, total: int}> $resource */
         $resource = $this->resource;
 
         return [
