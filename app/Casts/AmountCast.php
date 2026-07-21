@@ -19,7 +19,10 @@ class AmountCast implements CastsAttributes
      */
     public function get(Model $model, string $key, mixed $value, array $attributes): mixed
     {
-        return (float) ($value / 100);
+        /** @var int $amount */
+        $amount = $value;
+
+        return (float) ($amount / 100);
     }
 
     /**

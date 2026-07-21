@@ -27,7 +27,7 @@ class ExpenseData
             userId: Gate::allows('viewAny', User::class) ? $request->integer('user_id') : $request->user()?->id,
             categoryId: $request->integer('category_id'),
             amount: $request->float('amount'),
-            description: $request->input('description'),
+            description: $request->string('description')->toString(),
             spentAt: $request->date('spent_at'),
         );
     }

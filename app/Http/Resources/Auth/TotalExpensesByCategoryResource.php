@@ -6,6 +6,7 @@ namespace App\Http\Resources\Auth;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Collection;
 
 class TotalExpensesByCategoryResource extends JsonResource
 {
@@ -17,9 +18,12 @@ class TotalExpensesByCategoryResource extends JsonResource
     #[\Override]
     public function toArray(Request $request): array
     {
+        /** @var Collection<int, array{name: string, total: mixed}> $resource */
+        $resource = $this->resource;
+
         return [
-            'labels' => $this->resource->pluck('name'),
-            'data' => $this->resource->pluck('total')->map(fn ($total): float => (float) (($total ?? 0) / 100)),
+            'labels' => $resource->pluck('name'),
+            'data' => $resource->pluck('total')->map(fn ($total): float => (float) ((is_numeric($total) ? $total : 0) / 100)),
         ];
     }
 }
