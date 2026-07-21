@@ -24,9 +24,9 @@ class UserData
     {
         return new self(
             id: $request->integer('id'),
-            name: $request->input('name'),
-            email: $request->input('email'),
-            password: $request->input('password'),
+            name: $request->string('name')->toString(),
+            email: $request->string('email')->toString(),
+            password: $request->string('password')->toString(),
         );
     }
 }

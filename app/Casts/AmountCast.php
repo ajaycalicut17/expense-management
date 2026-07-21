@@ -7,6 +7,9 @@ namespace App\Casts;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @implements CastsAttributes<float, int>
+ */
 class AmountCast implements CastsAttributes
 {
     /**
@@ -16,7 +19,10 @@ class AmountCast implements CastsAttributes
      */
     public function get(Model $model, string $key, mixed $value, array $attributes): mixed
     {
-        return (float) ($value / 100);
+        /** @var int $amount */
+        $amount = $value;
+
+        return (float) ($amount / 100);
     }
 
     /**

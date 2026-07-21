@@ -7,6 +7,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Enums\RoleEnum;
+use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -14,11 +15,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * @property ?string $name
+ * @property ?string $email
+ * @property ?string $password
+ * @property ?RoleEnum $role
+ * @property bool $isAdmin
+ * @property bool $isUser
+ */
 #[Fillable(['name', 'email', 'password'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
+    /** @use HasFactory<UserFactory> */
     use HasFactory;
+
     use Notifiable;
 
     /**
@@ -36,6 +47,9 @@ class User extends Authenticatable
         ];
     }
 
+    /**
+     * @return Attribute<bool, never>
+     */
     protected function isAdmin(): Attribute
     {
         return Attribute::make(
@@ -43,6 +57,9 @@ class User extends Authenticatable
         );
     }
 
+    /**
+     * @return Attribute<bool, never>
+     */
     protected function isUser(): Attribute
     {
         return Attribute::make(

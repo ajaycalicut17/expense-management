@@ -22,6 +22,9 @@ class UserService
         return $user;
     }
 
+    /**
+     * @return Collection<int, User>
+     */
     public function all(): Collection
     {
         return User::query()
