@@ -155,7 +155,7 @@ jobs:
         env:
           DB_CONNECTION: sqlite
           DB_DATABASE: database/database.sqlite
-        run: ./vendor/bin/pest --ci --parallel
+        run: ./vendor/bin/pest --ci --parallel --coverage --only-covered --exactly=90.0
 
       - name: Execute tests using mysql
         env:
@@ -165,4 +165,4 @@ jobs:
           DB_DATABASE: testing
           DB_USERNAME: root
           DB_PASSWORD: root
-        run: ./vendor/bin/pest --ci --parallel
+        run: ./vendor/bin/pest --ci --parallel --coverage --only-covered --exactly=90.0
