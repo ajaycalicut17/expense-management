@@ -58,4 +58,4 @@ php artisan test
 docker run -d -p 80:80 ajaycalicut17/expense-management:latest
 ```
 
-The application will be accessible at `http://localhost`
+The application will be accessible at [http://localhost](http://localhost)
