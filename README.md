@@ -55,7 +55,6 @@ php artisan test
 ## Running with Docker
 
 ```bash
-docker pull ajaycalicut17/expense-management:latest
 docker run -d -p 80:80 ajaycalicut17/expense-management:latest
 ```
 
