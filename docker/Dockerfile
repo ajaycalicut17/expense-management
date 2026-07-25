@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install PHP extensions
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+RUN docker-php-ext-install pdo_mysql pdo_sqlite mbstring exif pcntl bcmath gd
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -29,7 +29,8 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction
 
 # Copy .env.example to .env and generate key
 RUN php -r "file_exists('.env') || copy('.env.example', '.env');" \
-    && php artisan key:generate
+    && php artisan key:generate \
+    && touch database/database.sqlite
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html \
