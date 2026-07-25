@@ -27,6 +27,10 @@ COPY . /var/www/html
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
+# Copy .env.example to .env and generate key
+RUN php -r "file_exists('.env') || copy('.env.example', '.env');" \
+    && php artisan key:generate
+
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html/storage \
