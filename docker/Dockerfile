@@ -30,7 +30,6 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction
 # Copy .env.example to .env and generate key
 RUN php -r "file_exists('.env') || copy('.env.example', '.env');" \
     && php artisan key:generate \
-    && mkdir -p database \
     && touch database/database.sqlite
 
 # Set permissions
