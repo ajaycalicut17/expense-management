@@ -28,6 +28,7 @@ jobs:
         run: vendor/bin/phpstan analyse --ansi
 
   rector:
+    if: github.actor != 'dependabot[bot]'
     needs: phpstan
     runs-on: ubuntu-latest
 
@@ -57,6 +58,7 @@ jobs:
           commit_user_email: 'action@github.com'
 
   lint:
+    if: github.actor != 'dependabot[bot]'
     needs: rector
     runs-on: ubuntu-latest
 
@@ -83,7 +85,11 @@ jobs:
           commit_user_email: 'action@github.com'
 
   test:
-    needs: lint
+    needs:
+      - phpstan
+      - rector
+      - lint
+    if: always() && needs.phpstan.result == 'success' && (needs.rector.result == 'success' || needs.rector.result == 'skipped') && (needs.lint.result == 'success' || needs.lint.result == 'skipped')
     runs-on: ubuntu-latest
 
     services:
