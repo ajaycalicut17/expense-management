@@ -10,6 +10,26 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class CategoryFactory extends Factory
 {
+    public const CATEGORIES = [
+        'Food',
+        'Transport',
+        'Shopping',
+        'Entertainment',
+        'Health',
+        'Education',
+        'Utilities',
+        'Rent',
+        'Groceries',
+        'Bills',
+        'Insurance',
+        'Investment',
+        'Salary',
+        'Gift',
+        'Loan',
+        'Tax',
+        'Other',
+    ];
+
     /**
      * Define the model's default state.
      *
@@ -18,25 +38,7 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->unique()->randomElement([
-                'Food',
-                'Transport',
-                'Shopping',
-                'Entertainment',
-                'Health',
-                'Education',
-                'Utilities',
-                'Rent',
-                'Groceries',
-                'Bills',
-                'Insurance',
-                'Investment',
-                'Salary',
-                'Gift',
-                'Loan',
-                'Tax',
-                'Other',
-            ]),
+            'name' => $this->faker->unique()->randomElement(self::CATEGORIES),
         ];
     }
 }
