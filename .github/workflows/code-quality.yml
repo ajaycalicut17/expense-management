@@ -35,7 +35,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5
         with:
-          token: ${{ secrets.CODE_QUALITY_ACCESS_TOKEN }}
+          token: ${{ github.actor == 'dependabot[bot]' && github.token || secrets.CODE_QUALITY_ACCESS_TOKEN }}
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -47,9 +47,15 @@ jobs:
         uses: "ramsey/composer-install@v3"
 
       - name: Run Rector
-        run: vendor/bin/rector --ansi
- 
-      - name: Commit files
+        run: |
+          if [ "${{ github.actor }}" = "dependabot[bot]" ]; then
+            vendor/bin/rector --dry-run --ansi
+          else
+            vendor/bin/rector --ansi
+          fi
+
+      - name: Commit Rector fixes
+        if: github.actor != 'dependabot[bot]'
         uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: '[rector] Rector fixes'
@@ -64,7 +70,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5
         with:
-          token: ${{ secrets.CODE_QUALITY_ACCESS_TOKEN }}
+          token: ${{ github.actor == 'dependabot[bot]' && github.token || secrets.CODE_QUALITY_ACCESS_TOKEN }}
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -73,9 +79,15 @@ jobs:
           tools: pint
 
       - name: Run Pint
-        run: pint
- 
-      - name: Commit linted files
+        run: |
+          if [ "${{ github.actor }}" = "dependabot[bot]" ]; then
+            pint --test
+          else
+            pint
+          fi
+
+      - name: Commit Pint fixes
+        if: github.actor != 'dependabot[bot]'
         uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: '[pint] Pint fixes'
