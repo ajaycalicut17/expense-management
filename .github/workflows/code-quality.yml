@@ -3,6 +3,8 @@ name: Code Quality
 on:
   pull_request:
     branches: ["main"]
+    paths-ignore:
+      - '.github/workflows/docker-build-push.yml'
 
 env:
   PHP_VERSION: "8.5"

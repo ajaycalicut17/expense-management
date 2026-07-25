@@ -20,6 +20,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5
 
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          coverage: none
+
+      - name: Install dependencies
+        uses: ramsey/composer-install@v3
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
