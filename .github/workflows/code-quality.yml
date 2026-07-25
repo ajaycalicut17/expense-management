@@ -5,6 +5,15 @@ on:
     branches: ["main"]
     paths-ignore:
       - '.github/workflows/docker-build-push.yml'
+      - '.github/dependabot.yml'
+      - 'docker/**'
+      - '.dockerignore'
+      - '.editorconfig'
+      - '.gitattributes'
+      - '.gitignore'
+      - '.npmrc'
+      - 'compose.yaml'
+      - 'README.md'
 
 env:
   PHP_VERSION: "8.5"
