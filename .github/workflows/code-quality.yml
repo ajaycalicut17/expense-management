@@ -130,7 +130,7 @@ jobs:
             --entrypoint "" \
             -e APP_ENV=testing \
             -e APP_DEBUG=true \
-            -e APP_KEY=base64:TestKeyForTestingOnly12345678901234567890 \
+            -e APP_KEY=base64:CGBgtDxAmupdM9loOp0fubS8WfeFbMVBmT0VtsyoZrw= \
             -e DB_CONNECTION=sqlite \
             expense-management:test \
             ./vendor/bin/pest --ci --parallel --coverage --only-covered --exactly=90.0
