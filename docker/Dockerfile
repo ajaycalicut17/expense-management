@@ -41,7 +41,7 @@ RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 RUN if [ "$NO_DEV" = "true" ]; then \
     composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist; \
     else \
-    composer install --optimize-autoloader --no-interaction --prefer-dist; \
+    composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist; \
     npm ci && \
     npx playwright install --with-deps; \
     fi
