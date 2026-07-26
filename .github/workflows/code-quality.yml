@@ -124,26 +124,12 @@ jobs:
           build-args: |
             NO_DEV=false
 
-      - name: Check root directory
+      - name: Execute tests using sqlite
         run: |
           docker run --rm \
             --entrypoint "" \
+            -e APP_ENV=testing \
+            -e APP_DEBUG=true \
+            -e DB_CONNECTION=sqlite \
             expense-management:test \
-            ls -la
-
-      - name: Check if composer.json exists
-        run: |
-          docker run --rm \
-            --entrypoint "" \
-            expense-management:test \
-            cat composer.json
-
-      # - name: Execute tests using sqlite
-      #   run: |
-      #     docker run --rm \
-      #       --entrypoint "" \
-      #       -e APP_ENV=testing \
-      #       -e APP_DEBUG=true \
-      #       -e DB_CONNECTION=sqlite \
-      #       expense-management:test \
-      #       ./vendor/bin/pest --ci --parallel --coverage --only-covered --exactly=90.0
+            ./vendor/bin/pest --ci --parallel --coverage --only-covered --exactly=90.0
