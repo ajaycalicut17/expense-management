@@ -33,9 +33,6 @@ RUN if [ "$NO_DEV" = "false" ]; then \
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Copy tests directory first (before .dockerignore takes effect)
-COPY tests /var/www/html/tests/
-
 # Copy application files
 COPY . /var/www/html
 
