@@ -27,7 +27,8 @@ RUN if [ "$NO_DEV" = "false" ]; then \
 # Install PHP extensions
 RUN docker-php-ext-install pdo_sqlite mbstring exif pcntl bcmath gd
 RUN if [ "$NO_DEV" = "false" ]; then \
-    docker-php-ext-install sockets pcov; \
+    docker-php-ext-install sockets; \
+    pecl install xdebug-3.3.2 && docker-php-ext-enable xdebug; \
     fi
 
 # Install Composer
