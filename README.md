@@ -55,7 +55,11 @@ php artisan test
 ## Running with Docker
 
 ```bash
-docker run -d -p 80:80 ajaycalicut17/expense-management:latest
+docker run -d -p 80:80 \
+  -e APP_ENV=production \
+  -e APP_DEBUG=false \
+  -e RUN_SEED=true \
+  ajaycalicut17/expense-management:latest
 ```
 
 The application will be accessible at [http://localhost](http://localhost)

@@ -11,16 +11,16 @@ if [ -n "$APP_ENV" ]; then
     sed -i "s|APP_ENV=.*|APP_ENV=${APP_ENV}|" .env
 fi
 
+if [ -n "$APP_KEY" ]; then
+    sed -i "s|APP_KEY=.*|APP_KEY=${APP_KEY}|" .env
+fi
+
 if [ -n "$APP_DEBUG" ]; then
     sed -i "s|APP_DEBUG=.*|APP_DEBUG=${APP_DEBUG}|" .env
 fi
 
 if [ -n "$APP_URL" ]; then
     sed -i "s|APP_URL=.*|APP_URL=${APP_URL}|" .env
-fi
-
-if [ -n "$APP_KEY" ]; then
-    sed -i "s|APP_KEY=.*|APP_KEY=${APP_KEY}|" .env
 fi
 
 if [ -n "$DB_CONNECTION" ]; then
