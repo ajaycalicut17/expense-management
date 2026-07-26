@@ -33,13 +33,15 @@ RUN if [ "$NO_DEV" = "false" ]; then \
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
+# Copy tests directory first (before .dockerignore takes effect)
+COPY tests /var/www/html/tests/
+
 # Copy application files
 COPY . /var/www/html
 
-# Copy tests directory only for dev builds
-RUN if [ "$NO_DEV" = "false" ]; then \
-    mkdir -p /var/www/html/tests && \
-    cp -r tests/* /var/www/html/tests/; \
+# Remove tests directory for production builds
+RUN if [ "$NO_DEV" = "true" ]; then \
+    rm -rf /var/www/html/tests; \
     fi
 
 # Copy entrypoint script
