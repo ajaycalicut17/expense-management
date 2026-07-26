@@ -52,10 +52,16 @@ if grep -q "^APP_KEY=$" .env; then
     php artisan key:generate
 fi
 
-# Run migrations if needed (optional, can be controlled by env var)
-if [ "$RUN_MIGRATIONS" = "true" ]; then
-    php artisan migrate --force
+# Run migrations
+php artisan migrate --force
+
+# Run database seeders if needed (optional, can be controlled by env var)
+if [ "$RUN_SEED" = "true" ]; then
+    php artisan db:seed --force
 fi
+
+# Optimize at runtime to ensure cached config reflects environment variables
+php artisan optimize
 
 # Execute the main command
 exec "$@"

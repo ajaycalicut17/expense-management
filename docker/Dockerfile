@@ -35,10 +35,6 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-di
 # Create database file
 RUN touch database/database.sqlite
 
-# Run migrations and optimize (will be re-run at runtime if needed)
-RUN php artisan migrate --seed --force \
-    && php artisan optimize
-
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html/storage \
