@@ -36,6 +36,12 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Copy application files
 COPY . /var/www/html
 
+# Copy tests directory only for dev builds
+RUN if [ "$NO_DEV" = "false" ]; then \
+    mkdir -p /var/www/html/tests && \
+    cp -r tests/* /var/www/html/tests/; \
+    fi
+
 # Copy entrypoint script
 COPY docker/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
