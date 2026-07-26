@@ -124,11 +124,20 @@ jobs:
           build-args: |
             NO_DEV=false
 
-      - name: Execute tests using sqlite
+      - name: Start Docker container
         run: |
-          docker run --rm \
+          docker run -d \
+            --name expense-test \
             -e APP_ENV=testing \
             -e APP_DEBUG=true \
             -e DB_CONNECTION=sqlite \
             expense-management:test \
-            ./vendor/bin/pest --ci --parallel --coverage --only-covered --exactly=90.0
+            tail -f /dev/null
+
+      - name: Execute tests using sqlite
+        run: |
+          docker exec expense-test ./vendor/bin/pest --ci --parallel --coverage --only-covered --exactly=90.0
+
+      - name: Stop Docker container
+        if: always()
+        run: docker rm -f expense-test
