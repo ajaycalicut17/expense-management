@@ -16,6 +16,14 @@ RUN apt-get update && apt-get install -y \
     libsqlite3-dev \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
+ARG NO_DEV=true
+RUN if [ "$NO_DEV" = "false" ]; then \
+    apt-get update && apt-get install -y \
+    nodejs \
+    npm \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*; \
+    fi
+
 # Install PHP extensions
 RUN docker-php-ext-install pdo_sqlite mbstring exif pcntl bcmath gd
 
@@ -30,7 +38,13 @@ COPY docker/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 # Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
+RUN if [ "$NO_DEV" = "true" ]; then \
+    composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist; \
+    else \
+    composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist; \
+    npm ci && \
+    npx playwright install --with-deps; \
+    fi
 
 # Create database file
 RUN touch database/database.sqlite
