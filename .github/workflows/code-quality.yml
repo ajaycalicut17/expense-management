@@ -124,12 +124,19 @@ jobs:
           build-args: |
             NO_DEV=false
 
-      - name: Check vendor directory
+      - name: Check root directory
         run: |
           docker run --rm \
             --entrypoint "" \
             expense-management:test \
-            ls -la vendor/
+            ls -la
+
+      - name: Check if composer.json exists
+        run: |
+          docker run --rm \
+            --entrypoint "" \
+            expense-management:test \
+            cat composer.json
 
       # - name: Execute tests using sqlite
       #   run: |
