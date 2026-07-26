@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install -y \
     unzip \
     supervisor \
     libsqlite3-dev \
+    libicu-dev \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 ARG NO_DEV=true
@@ -25,7 +26,7 @@ RUN if [ "$NO_DEV" = "false" ]; then \
     fi
 
 # Install PHP extensions
-RUN docker-php-ext-install pdo_sqlite mbstring exif pcntl bcmath gd
+RUN docker-php-ext-install pdo_sqlite mbstring exif pcntl bcmath gd intl
 RUN if [ "$NO_DEV" = "false" ]; then \
     docker-php-ext-install sockets; \
     pecl install pcov && docker-php-ext-enable pcov; \
