@@ -25,14 +25,18 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Copy application files
 COPY . /var/www/html
 
+# Copy entrypoint script
+COPY docker/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
 
-# Copy .env.example to .env and generate key
-RUN php -r "file_exists('.env') || copy('.env.example', '.env');" \
-    && php artisan key:generate \
-    && touch database/database.sqlite \
-    && php artisan migrate --seed --force \
+# Create database file
+RUN touch database/database.sqlite
+
+# Run migrations and optimize (will be re-run at runtime if needed)
+RUN php artisan migrate --seed --force \
     && php artisan optimize
 
 # Set permissions
@@ -46,5 +50,6 @@ COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 # Expose port 80
 EXPOSE 80
 
-# Start supervisord
+# Start supervisord via entrypoint
+ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
