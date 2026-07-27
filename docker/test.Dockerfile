@@ -20,7 +20,7 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install PHP extensions
-RUN docker-php-ext-install pdo_sqlite mbstring exif pcntl bcmath gd sockets
+RUN docker-php-ext-install pdo_sqlite mbstring exif pcntl bcmath gd intl sockets
 
 # Install PCOV for code coverage
 RUN pecl install pcov && docker-php-ext-enable pcov
