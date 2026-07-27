@@ -118,7 +118,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./docker/test/Dockerfile
+          file: ./docker/test.Dockerfile
           tags: expense-management:test
           load: true
 
