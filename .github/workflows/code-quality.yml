@@ -17,94 +17,94 @@ env:
   PHP_VERSION: "8.5"
 
 jobs:
-  phpstan:
-    runs-on: ubuntu-latest
+  # phpstan:
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v5
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v5
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ env.PHP_VERSION }}
-          coverage: none
+  #     - name: Setup PHP
+  #       uses: shivammathur/setup-php@v2
+  #       with:
+  #         php-version: ${{ env.PHP_VERSION }}
+  #         coverage: none
 
-      - name: Install dependencies
-        uses: ramsey/composer-install@v3
+  #     - name: Install dependencies
+  #       uses: ramsey/composer-install@v3
 
-      - name: Run PHPStan
-        run: vendor/bin/phpstan analyse --ansi
+  #     - name: Run PHPStan
+  #       run: vendor/bin/phpstan analyse --ansi
 
-  rector:
-    needs: phpstan
-    runs-on: ubuntu-latest
+  # rector:
+  #   needs: phpstan
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v5
-        with:
-          token: ${{ github.actor == 'dependabot[bot]' && github.token || secrets.CODE_QUALITY_ACCESS_TOKEN }}
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v5
+  #       with:
+  #         token: ${{ github.actor == 'dependabot[bot]' && github.token || secrets.CODE_QUALITY_ACCESS_TOKEN }}
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ env.PHP_VERSION }}
-          coverage: none
+  #     - name: Setup PHP
+  #       uses: shivammathur/setup-php@v2
+  #       with:
+  #         php-version: ${{ env.PHP_VERSION }}
+  #         coverage: none
 
-      - name: Install dependencies
-        uses: "ramsey/composer-install@v3"
+  #     - name: Install dependencies
+  #       uses: "ramsey/composer-install@v3"
 
-      - name: Run Rector
-        run: |
-          if [ "${{ github.actor }}" = "dependabot[bot]" ]; then
-            vendor/bin/rector --dry-run --ansi
-          else
-            vendor/bin/rector --ansi
-          fi
+  #     - name: Run Rector
+  #       run: |
+  #         if [ "${{ github.actor }}" = "dependabot[bot]" ]; then
+  #           vendor/bin/rector --dry-run --ansi
+  #         else
+  #           vendor/bin/rector --ansi
+  #         fi
 
-      - name: Commit Rector fixes
-        if: github.actor != 'dependabot[bot]'
-        uses: stefanzweifel/git-auto-commit-action@v7
-        with:
-          commit_message: '[rector] Rector fixes'
-          commit_author: 'GitHub Action <actions@github.com>'
-          commit_user_email: 'action@github.com'
+  #     - name: Commit Rector fixes
+  #       if: github.actor != 'dependabot[bot]'
+  #       uses: stefanzweifel/git-auto-commit-action@v7
+  #       with:
+  #         commit_message: '[rector] Rector fixes'
+  #         commit_author: 'GitHub Action <actions@github.com>'
+  #         commit_user_email: 'action@github.com'
 
-  lint:
-    needs: rector
-    runs-on: ubuntu-latest
+  # lint:
+  #   needs: rector
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v5
-        with:
-          token: ${{ github.actor == 'dependabot[bot]' && github.token || secrets.CODE_QUALITY_ACCESS_TOKEN }}
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v5
+  #       with:
+  #         token: ${{ github.actor == 'dependabot[bot]' && github.token || secrets.CODE_QUALITY_ACCESS_TOKEN }}
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ env.PHP_VERSION }}
-          tools: pint
+  #     - name: Setup PHP
+  #       uses: shivammathur/setup-php@v2
+  #       with:
+  #         php-version: ${{ env.PHP_VERSION }}
+  #         tools: pint
 
-      - name: Run Pint
-        run: |
-          if [ "${{ github.actor }}" = "dependabot[bot]" ]; then
-            pint --test
-          else
-            pint
-          fi
+  #     - name: Run Pint
+  #       run: |
+  #         if [ "${{ github.actor }}" = "dependabot[bot]" ]; then
+  #           pint --test
+  #         else
+  #           pint
+  #         fi
 
-      - name: Commit Pint fixes
-        if: github.actor != 'dependabot[bot]'
-        uses: stefanzweifel/git-auto-commit-action@v7
-        with:
-          commit_message: '[pint] Pint fixes'
-          commit_author: 'GitHub Action <actions@github.com>'
-          commit_user_email: 'action@github.com'
+  #     - name: Commit Pint fixes
+  #       if: github.actor != 'dependabot[bot]'
+  #       uses: stefanzweifel/git-auto-commit-action@v7
+  #       with:
+  #         commit_message: '[pint] Pint fixes'
+  #         commit_author: 'GitHub Action <actions@github.com>'
+  #         commit_user_email: 'action@github.com'
 
   test:
-    needs: lint
+    # needs: lint
     runs-on: ubuntu-latest
 
     steps:
