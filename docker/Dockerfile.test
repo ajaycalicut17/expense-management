@@ -31,30 +31,8 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Copy application files
 COPY . /var/www/html
 
-# Copy entrypoint script
-# COPY docker/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
-# RUN chmod +x /usr/local/bin/docker-entrypoint.sh
-
 # Install PHP dependencies
 RUN composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
 # Install Node dependencies and Playwright
 RUN npm ci && npx playwright install --with-deps
-
-# Create database file
-# RUN touch database/database.sqlite
-
-# Set permissions
-# RUN chown -R www-data:www-data /var/www/html \
-#     && chmod -R 755 /var/www/html/storage \
-#     && chmod -R 755 /var/www/html/bootstrap/cache
-
-# Copy supervisord configuration
-# COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-
-# Expose port 80
-# EXPOSE 80
-
-# Start supervisord via entrypoint
-# ENTRYPOINT ["docker-entrypoint.sh"]
-# CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
