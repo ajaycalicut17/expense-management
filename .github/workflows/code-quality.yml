@@ -118,16 +118,13 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./docker/Dockerfile
+          file: ./docker/test.Dockerfile
           tags: expense-management:test
           load: true
-          build-args: |
-            NO_DEV=false
 
       - name: Execute tests using sqlite
         run: |
           docker run --rm \
-            --entrypoint "" \
             -e APP_ENV=testing \
             -e APP_DEBUG=true \
             -e APP_KEY=base64:CGBgtDxAmupdM9loOp0fubS8WfeFbMVBmT0VtsyoZrw= \
