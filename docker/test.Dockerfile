@@ -28,9 +28,6 @@ RUN pecl install pcov && docker-php-ext-enable pcov
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Use test-specific dockerignore (override root .dockerignore)
-COPY docker/test/.dockerignore .dockerignore
-
 # Copy application files
 COPY . /var/www/html
 

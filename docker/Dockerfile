@@ -26,9 +26,6 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Copy application files
 COPY . /var/www/html
 
-# Remove tests directory for production builds
-RUN rm -rf /var/www/html/tests
-
 # Copy entrypoint script
 COPY docker/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
