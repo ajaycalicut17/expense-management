@@ -1,10 +1,6 @@
 .git
 .github
-.gitignore
-.gitattributes
-.env
 node_modules
-vendor
 storage/*.key
 storage/logs/*
 storage/framework/cache/*
@@ -12,4 +8,14 @@ storage/framework/sessions/*
 storage/framework/views/*
 storage/framework/testing/*
 tests
+vendor
+.editorconfig
+.env
+.gitattributes
+.gitignore
+.npmrc
 .phpunit.result.cache
+phpstan.neon
+phpunit.xml
+README.md
+rector.php
