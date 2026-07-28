@@ -12,6 +12,10 @@ on:
       - '.npmrc'
       - 'compose.yaml'
       - 'README.md'
+      - 'docker/.dockerignore'
+      - 'docker/Dockerfile'
+      - 'docker/docker-entrypoint.sh'
+      - 'docker/supervisord.conf'
 
 env:
   PHP_VERSION: "8.5"
