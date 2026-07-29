@@ -12,8 +12,37 @@ env:
   PHP_VERSION: "8.5"
 
 jobs:
-  build-and-push:
+  test:
     if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./docker/test.Dockerfile
+          tags: expense-management:test
+          load: true
+
+      - name: Execute tests using sqlite
+        run: |
+          docker run --rm \
+            -e APP_ENV=testing \
+            -e APP_DEBUG=true \
+            -e APP_KEY=base64:CGBgtDxAmupdM9loOp0fubS8WfeFbMVBmT0VtsyoZrw= \
+            -e DB_CONNECTION=sqlite \
+            expense-management:test \
+            ./vendor/bin/pest --ci --parallel
+
+  build-and-push:
+    needs: test
     runs-on: ubuntu-latest
 
     steps:
