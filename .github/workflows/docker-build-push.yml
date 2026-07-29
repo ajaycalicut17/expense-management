@@ -34,8 +34,6 @@ jobs:
           file: ./docker/test.Dockerfile
           tags: expense-management:test
           load: true
-          cache-from: type=gha
-          cache-to: type=gha,mode=min
 
       - name: Execute tests using sqlite
         run: |
@@ -81,10 +79,6 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64,linux/arm64
-          cache-from: type=gha
-          cache-to: type=gha,mode=min
-          build-args: |
-            BUILDKIT_INLINE_CACHE=1
 
       - name: Image digest
         run: echo "Image pushed with digest ${{ steps.meta.outputs.digest }}."
