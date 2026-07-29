@@ -24,7 +24,7 @@ class AverageDailyExpenseResource extends JsonResource
         $amount = (float) $resource / 100;
 
         return [
-            // 'average_daily_expenses' => Number::currency($amount),
+            'average_daily_expenses' => Number::currency($amount),
         ];
     }
 }
