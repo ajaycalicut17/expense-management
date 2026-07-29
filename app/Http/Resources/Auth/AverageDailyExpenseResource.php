@@ -18,9 +18,6 @@ class AverageDailyExpenseResource extends JsonResource
     #[\Override]
     public function toArray(Request $request): array
     {
-        /** @var int $resource */
-        $resource = $this->resource;
-
         return [
             // 'average_daily_expenses' => Number::currency($amount),
         ];
