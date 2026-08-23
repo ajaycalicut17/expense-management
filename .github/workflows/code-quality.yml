@@ -183,7 +183,7 @@ jobs:
           DB_DATABASE: database/database.sqlite
 
       - name: Wait for application to start
-        run: sleep 10
+        run: sleep 5
 
       - name: Run Playwright tests
         working-directory: expense-management-test
