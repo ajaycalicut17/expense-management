@@ -164,6 +164,17 @@ jobs:
         working-directory: expense-management-test
         run: mkdir -p .auth
 
+      - name: Start Laravel application
+        working-directory: .
+        run: php artisan serve --host=0.0.0.0 --port=3000
+        env:
+          APP_ENV: testing
+          APP_KEY: base64:CGBgtDxAmupdM9loOp0fubS8WfeFbMVBmT0VtsyoZrw=
+          DB_CONNECTION: sqlite
+
+      - name: Wait for application to start
+        run: sleep 5
+
       - name: Run Playwright tests
         working-directory: expense-management-test
         run: npx playwright test
