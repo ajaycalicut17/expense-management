@@ -164,6 +164,15 @@ jobs:
         working-directory: expense-management-test
         run: mkdir -p .auth
 
+      - name: Run database migrations
+        working-directory: .
+        run: php artisan migrate --seed --force
+        env:
+          APP_ENV: testing
+          APP_KEY: base64:CGBgtDxAmupdM9loOp0fubS8WfeFbMVBmT0VtsyoZrw=
+          DB_CONNECTION: sqlite
+          DB_DATABASE: database/database.sqlite
+
       - name: Start Laravel application
         working-directory: .
         run: php artisan serve --host=0.0.0.0 --port=3000 > /dev/null 2>&1 &
