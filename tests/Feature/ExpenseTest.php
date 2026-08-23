@@ -161,7 +161,7 @@ test('update expense', function (): void {
     $this->assertDatabaseHas('expenses', [
         'user_id' => $user->id,
         'category_id' => $category->id,
-        'amount' => 100001,
+        'amount' => 10000,
         'description' => 'Test expense',
         'spent_at' => $now->format('Y-m-d H:i:s'),
     ]);
