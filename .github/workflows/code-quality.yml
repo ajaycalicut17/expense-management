@@ -171,9 +171,7 @@ jobs:
           APP_ENV: testing
           APP_KEY: base64:CGBgtDxAmupdM9loOp0fubS8WfeFbMVBmT0VtsyoZrw=
           DB_CONNECTION: sqlite
-
-      - name: Wait for application to start
-        run: sleep 5
+          DB_DATABASE: database/database.sqlite
 
       - name: Run Playwright tests
         working-directory: expense-management-test
