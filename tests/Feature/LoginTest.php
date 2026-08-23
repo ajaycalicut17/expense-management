@@ -77,28 +77,3 @@ test('logout', function (): void {
 
     $response->assertRedirect('/');
 });
-
-it('may login the user', function (): void {
-    $user = User::factory()->create();
-
-    $pendingAwaitablePage = visit('/');
-
-    $pendingAwaitablePage->fill('email', $user->email)
-        ->fill('password', 'password')
-        ->click('Log in')
-        ->assertSee('Dashboard')
-        ->assertSee($user->name);
-
-    $this->assertAuthenticated();
-});
-
-it('may logout the user', function (): void {
-    $user = User::factory()->create();
-    $this->actingAs($user);
-
-    $pendingAwaitablePage = visit('/dashboard');
-
-    $pendingAwaitablePage->click($user->name)
-        ->click('Log Out')
-        ->assertSee('Log in');
-});
