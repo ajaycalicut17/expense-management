@@ -45,6 +45,44 @@ jobs:
             expense-management:test \
             ./vendor/bin/pest --ci --parallel
 
+      - name: Checkout code Expense Management Test
+        uses: actions/checkout@v5
+        with:
+          repository: ajaycalicut17/expense-management-test
+          token: ${{ github.actor == 'dependabot[bot]' && github.token || secrets.CODE_QUALITY_ACCESS_TOKEN }}
+          path: expense-management-test
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: Install dependencies
+        working-directory: expense-management-test
+        run: npm ci
+
+      - name: Install Playwright Browsers
+        working-directory: expense-management-test
+        run: npx playwright install --with-deps
+
+      - name: Create .auth directory
+        working-directory: expense-management-test
+        run: mkdir -p .auth
+
+      - name: Run Playwright tests
+        working-directory: expense-management-test
+        env:
+          BASE_URL: http://localhost
+        run: npx playwright test
+
+      - name: Upload Playwright report
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
+
   build-and-push:
     needs: test
     runs-on: ubuntu-latest
