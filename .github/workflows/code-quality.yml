@@ -160,6 +160,10 @@ jobs:
         working-directory: expense-management-test
         run: npx playwright install --with-deps
 
+      - name: Create .auth directory
+        working-directory: expense-management-test
+        run: mkdir -p .auth
+
       - name: Run Playwright tests
         working-directory: expense-management-test
         run: npx playwright test
