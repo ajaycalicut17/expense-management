@@ -58,8 +58,8 @@ jobs:
           docker run -d \
             --name expense-management-app \
             -p 80:80 \
-            -e APP_ENV=testing \
-            -e APP_DEBUG=true \
+            -e APP_ENV=production \
+            -e APP_DEBUG=false \
             -e APP_KEY=base64:CGBgtDxAmupdM9loOp0fubS8WfeFbMVBmT0VtsyoZrw= \
             -e DB_CONNECTION=sqlite \
             -e APP_URL=http://localhost \
