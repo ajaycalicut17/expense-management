@@ -153,12 +153,15 @@ jobs:
           node-version: lts/*
 
       - name: Install dependencies
+        working-directory: expense-management-test
         run: npm ci
 
       - name: Install Playwright Browsers
+        working-directory: expense-management-test
         run: npx playwright install --with-deps
 
       - name: Run Playwright tests
+        working-directory: expense-management-test
         run: npx playwright test
 
       - name: Upload Playwright report
