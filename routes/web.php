@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function (): void {
 
+    Route::get('/health', fn () => response()->json(['status' => 'ok']))->name('health');
+
     Route::controller(LoginController::class)->group(function (): void {
         Route::get('/', 'index')->name('index');
         Route::post('/login', 'login')->name('login');
